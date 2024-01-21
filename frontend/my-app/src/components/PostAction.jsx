@@ -5,7 +5,7 @@ import { useState } from "react";
 import { url } from "../url";
 import { token } from "../getToken";
 
-const PostAction = ({ el }) => {
+const PostAction = ({ el, addComment,len }) => {
   const [comment, setComment] = useState("");
   const submitComment = () => {
     fetch(url + "post/comment", {
@@ -17,7 +17,7 @@ const PostAction = ({ el }) => {
       body: JSON.stringify({ message: comment, postId: el._id }),
     })
       .then((res) => res.json())
-      .then((post) => console.log(post));
+      .then((post) => addComment(post));
   };
   return (
     <>
@@ -54,7 +54,7 @@ const PostAction = ({ el }) => {
             clip-rule="evenodd"
           ></path>
         </svg>
-        <span>{el.comments.length}</span>
+        <span>{len}</span>
       </div>
 
       <div>

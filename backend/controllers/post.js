@@ -59,7 +59,11 @@ exports.postPost = async (req, res, next) => {
   const post = await Post.create({ image, caption, hashtag, auth: req.auth });
   await Socials.findOneAndUpdate(
     { auth: req.auth },
-    { $push: { posts: post._id } }
+    {
+      $push: {
+        posts: { $each: [post._id], $position: 0 },
+      },
+    }
   );
   res.json(post);
 };
@@ -80,9 +84,13 @@ exports.addComment = async (req, res, next) => {
   const { postId, message } = req.body;
   console.log(postId);
   const post = await Post.findByIdAndUpdate(postId, {
-    $push: { comments: { message, user: req.auth } },
+    $push: { comments: { $each: [{ message, user: req.auth }], $position: 0 } },
   });
-  res.json(post);
+  const comments = await Post.findById(postId).populate({
+    path: "comments",
+    populate: "user",
+  });
+  res.json(comments.comments);
 };
 exports.addLike = async (req, res, next) => {
   const { like, postId } = req.query;

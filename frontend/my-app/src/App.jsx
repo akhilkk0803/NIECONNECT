@@ -7,11 +7,13 @@ import { Theme } from "@radix-ui/themes";
 import Dept from "./components/Dept";
 import Clubs from "./components/Clubs";
 import AddPost from "./components/posts/AddPost";
+import Error from "./Error";
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
+      errorElement: <Error />,
       element: <Root />,
       children: [
         {
