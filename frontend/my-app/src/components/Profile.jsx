@@ -1,24 +1,44 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 import { url } from "../url";
 import { Avatar } from "@radix-ui/themes";
 import ProfileInfo from "./ProfileInfo";
 import Posts from "./Posts";
 const Profile = () => {
   const [userData, setUserData] = useState([]);
+  const [error, setError] = useState(undefined);
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const { username } = params;
+  
   useEffect(() => {
     fetch(url + "user/" + username)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 404) {
+          const error = new Error("User not found");
+          error.status = 404;
+          throw error;
+        }
+        return res.json();
+      })
       .then((data) => {
         setUserData(data);
-        console.log(data);
         setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err.status);
+        setError({ msg: err.message, status: err.status });
       });
   }, [username]);
+  if (error) {
+    return (
+      <h1>
+        {error.msg}
+        {error.status}
+      </h1>
+    );
+  }
   if (loading) {
     return <h1>Loading....</h1>;
   }

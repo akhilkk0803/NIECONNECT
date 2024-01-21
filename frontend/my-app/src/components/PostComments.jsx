@@ -1,9 +1,10 @@
 import { Avatar } from "@radix-ui/themes";
-import React from "react";
+import React, { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 const PostComments = ({ comments }) => {
   const [show, setShow] = useState(false);
+  
   console.log(comments);
   return (
     <div className="dark:text-white text-black">
@@ -28,9 +29,9 @@ const PostComments = ({ comments }) => {
                 variants={{ collapsed: { scale: 0.8 }, open: { scale: 1 } }}
                 transition={{ duration: 0.8 }}
               >
-                <Avatar src={el.dp} radius="full" />
+                <Avatar src={el.user.dp} radius="full" />
                 <div>
-                  <p className="text-sm font-semibold">{el.sender}</p>
+                  <p className="text-sm font-semibold">{el.user.username}</p>
                   <p className="text-sm">{el.message}</p>
                 </div>
               </motion.div>
@@ -40,9 +41,9 @@ const PostComments = ({ comments }) => {
       </AnimatePresence>
       {!show && comments.length > 0 && (
         <div className="flex gap-3 mt-3 bg-slate-400 px-6 py-3   rounded-2xl w-fit ">
-          <Avatar src={comments[0].dp} radius="full" />
+          <Avatar src={comments[0].user.dp} radius="full" />
           <div>
-            <p className="text-sm font-semibold">{comments[0].sender}</p>
+            <p className="text-sm font-semibold">{comments[0].user.username}</p>
             <p className="text-sm">{comments[0].message}</p>
           </div>
         </div>

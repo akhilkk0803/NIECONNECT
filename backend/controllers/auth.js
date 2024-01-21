@@ -93,19 +93,22 @@ exports.getUser = async (req, res, next) => {
     if (!user) {
       throw generateError("Not Found", 404);
     }
-    const socials = await Socials.findOne({ auth: user._id }).populate({
-      path: "posts",
-      populate: {
-        path: "comments",
+    const socials = await Socials.findOne({ auth: user._id })
+      .populate({
+        path: "posts",
         populate: {
-          path: "user",
+          path: "comments",
+          populate: {
+            path: "user",
+          },
         },
-      },
-
-      populate: {
-        path: "auth",
-      },
-    });
+      })
+      .populate({
+        path: "posts",
+        populate: {
+          path: "auth",
+        },
+      });
     res.json({ user, socials });
   } catch (error) {
     error.statusCode = error.statusCode || 500;
