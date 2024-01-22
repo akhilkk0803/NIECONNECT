@@ -9,7 +9,7 @@ const PostImage = ({ el }) => {
   return (
     <div className="flex items-center justify-center mt-3 ">
       <AnimatePresence>
-        <div className="h-[500px] w-[70%] relative ">
+        <div className="h-[500px] max-w-[60%] relative ">
           <motion.img
             src={url + "public/" + el[curr]}
             key={el[curr]}
@@ -48,8 +48,8 @@ const PostImage = ({ el }) => {
                   {[...new Array(n)].map((_, i) => (
                     <div
                       className={` mr-3 rounded-[50%] bg-white p-[4px] ${
-                        curr == i ? "bg-white" : "bg-gray-700"
-                      } cursor-pointer`}
+                        curr == i ? "bg-white" : "bg-blue-700"
+                      } cursor-pointer shadow-lg`}
                       onClick={() => {
                         setDir(curr > i ? "left" : "right");
                         setCurr(i);

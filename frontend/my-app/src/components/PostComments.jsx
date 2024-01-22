@@ -2,9 +2,10 @@ import { Avatar } from "@radix-ui/themes";
 import React, { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
+import Time from "./util/Time";
 const PostComments = ({ comments }) => {
   const [show, setShow] = useState(false);
-  
+
   console.log(comments);
   return (
     <div className="dark:text-white text-black">
@@ -32,6 +33,7 @@ const PostComments = ({ comments }) => {
                 <Avatar src={el.user.dp} radius="full" />
                 <div>
                   <p className="text-sm font-semibold">{el.user.username}</p>
+                  <Time currTime={el.createdAt} />
                   <p className="text-sm">{el.message}</p>
                 </div>
               </motion.div>
@@ -44,6 +46,7 @@ const PostComments = ({ comments }) => {
           <Avatar src={comments[0].user.dp} radius="full" />
           <div>
             <p className="text-sm font-semibold">{comments[0].user.username}</p>
+            <Time currTime={comments[0].createdAt} />
             <p className="text-sm">{comments[0].message}</p>
           </div>
         </div>
