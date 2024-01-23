@@ -8,6 +8,8 @@ import Dept from "./components/Dept";
 import Clubs from "./components/Clubs";
 import AddPost from "./components/posts/AddPost";
 import Error from "./Error";
+import Signup from "./components/auth/Signup";
+import Login from "./components/auth/Login";
 
 function App() {
   const router = createBrowserRouter([
@@ -35,6 +37,14 @@ function App() {
         {
           path: "post/new",
           element: <AddPost />,
+        },
+        {
+          path: "signup",
+          element: <Signup />,
+        },
+        {
+          path: "login",
+          element: <Login />,
         },
       ],
     },
