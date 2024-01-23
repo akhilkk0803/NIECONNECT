@@ -1,28 +1,21 @@
 import React, { useState } from "react";
 import { url } from "../../url";
 import { TrashIcon } from "@radix-ui/react-icons";
-import { useToast } from "@chakra-ui/react";
-import {token} from "../../getToken";
+import { token } from "../../getToken";
+import Toast from "../util/Toast";
 const AddPost = () => {
-  const toast = useToast();
   const [post, setPost] = useState({
     caption: null,
     hashtag: null,
   });
   const [uploaded, setUploaded] = useState([]);
-  const createToast = (title, desc, status) => {
-    toast({
-      title: title,
-      description: desc,
-      status: status,
-      duration: 5000,
-      isClosable: true,
-    });
+  const toast = (title, desc, status) => {
+    <Toast title={title} desc={desc} status={status} />;
   };
   const submitHandler = async (e) => {
     e.preventDefault();
     if (!post.caption || !uploaded) {
-      createToast(
+      toast(
         "Please enter all the details",
         "caption/images are missing",
         "error"
