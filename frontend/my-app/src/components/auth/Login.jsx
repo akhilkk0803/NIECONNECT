@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { url } from "../../url";
 import { useDispatch } from "react-redux";
 import { setuser } from "../../store/userslice";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Toast from "../util/Toast";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [user, setUser] = useState({
-    username: "student1",
-    password: "student123",
+    username: null,
+    password: null,
   });
   const location = useLocation();
   const myParam = new URLSearchParams(location.search).get("type");
+  useEffect(() => {
+    if (myParam != "student" && myParam != "club" && myParam != "dept") {
+      return navigate("?type=student");
+    }
+  }, [myParam]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch(url + myParam + "/", {
@@ -39,12 +44,29 @@ const Login = () => {
   };
   return (
     <div>
-      <form action="">
-        <label htmlFor="username">Username</label>
-        <input type="text" name="username" onChange={handlechange} />
-        <label htmlFor="password">Password</label>
-        <input type="password" name="password" onChange={handlechange} />
+      <form action="" className="flex flex-col items-center gap-3">
+        <div>
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            className="text-black"
+            onChange={handlechange}
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            className="text-black"
+            onChange={handlechange}
+          />
+        </div>
         <button onClick={handleSubmit}>Submit</button>
+        <Link to={"?type=student"}>As a student</Link>
+        <Link to="?type=club">As a club</Link>
+        <Link to={"?type=dept"}>As a dept</Link>
       </form>
     </div>
   );
