@@ -10,13 +10,13 @@ const getToken = (id, auth) => {
   return token;
 };
 exports.getCurrentDept = async (req, res, next) => {
-  const dept = await Dept.findOne({ auth: req.userId });
+  const dept = await Dept.findOne({ auth: req.userId }).populate("auth");
   try {
     if (!dept) {
       throw generateError("No dept found", 404);
     }
-    const token = getToken(dept._id, req.auth);
-    res.status(200).json({ token, dept });
+    const token = getToken(dept._id, req.userId);
+    res.status(200).json({ token, user: dept });
   } catch (error) {
     next(error);
   }

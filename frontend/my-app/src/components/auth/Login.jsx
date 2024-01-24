@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import { url } from "../../url";
 import { useDispatch } from "react-redux";
 import { setuser } from "../../store/userslice";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Toast from "../util/Toast";
 const Login = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [user, setUser] = useState({
     username: "student1",
     password: "student123",
   });
-  const navigate = useNavigate();
+  const location = useLocation();
+  const myParam = new URLSearchParams(location.search).get("type");
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch(url + "student/", {
+    const res = await fetch(url + myParam + "/", {
       method: "POST",
       body: JSON.stringify({ ...user }),
       headers: {

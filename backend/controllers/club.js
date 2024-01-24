@@ -11,13 +11,13 @@ const getToken = (id, auth) => {
   return token;
 };
 exports.getCurrentClub = async (req, res, next) => {
-  const club = await Club.findOne({ auth: req.userId });
+  const club = await Club.findOne({ auth: req.userId }).populate("auth");
   try {
     if (!club) {
       throw generateError("No club found", 404);
     }
     const token = getToken(club._id, req.userId);
-    res.status(200).json({ token, club });
+    res.status(200).json({ token, user: club });
   } catch (error) {
     next(error);
   }
