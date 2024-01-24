@@ -30,11 +30,11 @@ const PostComments = ({ comments }) => {
                 variants={{ collapsed: { scale: 0.8 }, open: { scale: 1 } }}
                 transition={{ duration: 0.8 }}
               >
-                <Avatar src={el.user.dp} radius="full" />
+                <Avatar src={el.user?.dp} radius="full" />
                 <div>
-                  <p className="text-sm font-semibold">{el.user.username}</p>
+                  <p className="text-sm font-semibold">{el.user?.username}</p>
                   <Time currTime={el.createdAt} />
-                  <p className="text-sm">{el.message}</p>
+                  <p className="text-sm">{el?.message}</p>
                 </div>
               </motion.div>
             ))}
@@ -43,11 +43,11 @@ const PostComments = ({ comments }) => {
       </AnimatePresence>
       {!show && comments.length > 0 && (
         <div className="flex gap-3 mt-3 bg-slate-400 px-6 py-3   rounded-2xl w-fit ">
-          <Avatar src={comments[0].user.dp} radius="full" />
+          <Avatar src={comments[0].user?.dp} radius="full" />
           <div>
-            <p className="text-sm font-semibold">{comments[0].user.username}</p>
+            <p className="text-sm font-semibold">{comments[0].user?.username}</p>
             <Time currTime={comments[0].createdAt} />
-            <p className="text-sm">{comments[0].message}</p>
+            <p className="text-sm">{comments[0]?.message}</p>
           </div>
         </div>
       )}

@@ -19,7 +19,7 @@ exports.getUser = async (req, res, next) => {
   }
 };
 exports.getCurrentUser = async (req, res, next) => {
-  const user = await Student.findOne({ auth: req.userId });
+  const user = await Student.findOne({ auth: req.userId }).populate("auth");
   const token = getToken(user._id, req.userId);
   res.status(200).json({ user, token });
 };
