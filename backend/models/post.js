@@ -18,13 +18,17 @@ const postSchema = new mongoose.Schema(
       ref: "Auth",
     },
     comments: [
-      {
-        message: String,
-        user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Auth",
+      new mongoose.Schema(
+        {
+          message: String,
+          user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Auth",
+          },
         },
-      },
+
+        { timestamps: true }
+      ),
     ],
     hashtag: {
       type: String,
