@@ -13,6 +13,11 @@ export const userslice = createSlice({
       console.log(action.payload);
       return state;
     },
+    removeUser: (state) => {
+      state.user = null;
+      localStorage.removeItem("token");
+      return null;
+    },
   },
 });
 export const { setuser } = userslice.actions;
