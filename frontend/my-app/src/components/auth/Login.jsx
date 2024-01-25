@@ -3,8 +3,9 @@ import { url } from "../../url";
 import { useDispatch } from "react-redux";
 import { setuser } from "../../store/userslice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Toast from "../util/Toast";
+import { useToast } from "@chakra-ui/react";
 const Login = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [user, setUser] = useState({
@@ -20,21 +21,32 @@ const Login = () => {
   }, [myParam]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch(url + myParam + "/", {
-      method: "POST",
-      body: JSON.stringify({ ...user }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.status === 404) {
-      return <Toast title={"User not found"} status={"error"} />;
-    } else if (res.status === 401) {
-      return <Toast title={"Incorrect Password"} status={"warning"} />;
+    try {
+      const res = await fetch(url + myParam + "/", {
+        method: "POST",
+        body: JSON.stringify({ ...user }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.status === 404) {
+        throw new Error("User not found");
+      } else if (res.status === 401) {
+        throw new Error("Incorrect Password");
+      }
+      const User = await res.json();
+      dispatch(setuser({ user: User.user.auth, token: User.token }));
+      return navigate(`/profile/${user.username}`);
+    } catch (e) {
+      console.log(e.message);
+      toast({
+        title: e.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
     }
-    const User = await res.json();
-    dispatch(setuser({ user: User.user.auth, token: User.token }));
-    return navigate(`/profile/${user.username}`);
   };
   const handlechange = (e) => {
     setUser((prev) => ({

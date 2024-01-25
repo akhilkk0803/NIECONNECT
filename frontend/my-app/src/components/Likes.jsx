@@ -4,7 +4,6 @@ import { token } from "../getToken.js";
 const Likes = ({ likes, likehandler, likeState }) => {
   return (
     <div className="flex items-center gap-2  ">
-      {" "}
       <div className="cursor-pointer" onClick={likehandler}>
         <svg
           width="15"

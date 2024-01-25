@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { url } from "../../url";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { token } from "../../getToken";
-import Toast from "../util/Toast";
 const AddPost = () => {
   const [post, setPost] = useState({
     caption: null,
@@ -10,7 +9,14 @@ const AddPost = () => {
   });
   const [uploaded, setUploaded] = useState([]);
   const toast = (title, desc, status) => {
-    <Toast title={title} desc={desc} status={status} />;
+    toast({
+      title: title,
+      description: desc,
+      status: status,
+      duration: 5000,
+      isClosable: true,
+      position: "top-left",
+    });
   };
   const submitHandler = async (e) => {
     e.preventDefault();

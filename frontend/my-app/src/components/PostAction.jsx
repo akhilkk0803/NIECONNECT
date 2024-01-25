@@ -6,28 +6,44 @@ import { url } from "../url";
 import { token } from "../getToken";
 import Likes from "./Likes";
 import { useSelector } from "react-redux";
+import { useToast } from "@chakra-ui/react";
 const PostAction = ({ el, addComment, len }) => {
-  // const id = useSelector((state) => state.user?.user?._id);
-  const id = "659ea669191d7a4537fa7c94";
+  const toast = useToast();
+  const id = useSelector((state) => state.user?.user?._id);
+  console.log(id);
+  //const id = "659ea669191d7a4537fa7c94";
   const [comment, setComment] = useState("");
   const [likes, setLikes] = useState(el.Likes);
   const [likeState, setLikeState] = useState(
     !el.Likes.filter((el) => el === id).length > 0
   );
   const likehandler = async () => {
-    console.log(id);
-    const res = await fetch(
-      url + "post/like?like=" + likeState + "&postId=" + el._id,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+    try {
+      if (!id) {
+        throw new Error("LOGIN IN TO LIKE");
       }
-    );
-    const data = await res.json();
-    setLikes(data.Likes);
-    setLikeState((prev) => !prev);
+      const res = await fetch(
+        url + "post/like?like=" + likeState + "&postId=" + el._id,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      const data = await res.json();
+      setLikes(data.Likes);
+      setLikeState((prev) => !prev);
+    } catch (error) {
+      return toast({
+        title: error.message,
+        description: "",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+    }
   };
   const submitComment = () => {
     fetch(url + "post/comment", {
