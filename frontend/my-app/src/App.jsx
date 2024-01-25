@@ -10,8 +10,12 @@ import AddPost from "./components/posts/AddPost";
 import Error from "./Error";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
-
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setuser } from "./store/userslice";
+import { url } from "./url";
 function App() {
+  const dispatch = useDispatch();
   const router = createBrowserRouter([
     {
       path: "/",
@@ -49,6 +53,22 @@ function App() {
       ],
     },
   ]);
+  useEffect(() => {
+    const getuser = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const res = await fetch(url + "user/", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (res.status === 401) return;
+      const user = await res.json();
+      dispatch(setuser({ user, token }));
+      console.log(user);
+    };
+    getuser();
+  }, []);
   return (
     <Theme>
       <RouterProvider router={router}></RouterProvider>

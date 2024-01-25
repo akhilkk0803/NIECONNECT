@@ -79,8 +79,7 @@ exports.getCurrUser = async (req, res, next) => {
     if (!user) {
       throw generateError("Not Found", 404);
     }
-    const socials = await Socials.findOne({ auth: id });
-    res.json({ user, socials });
+    res.json(user);
   } catch (error) {
     error.statusCode = error.statusCode || 500;
     next(error);
