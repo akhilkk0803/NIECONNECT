@@ -94,18 +94,21 @@ exports.addComment = async (req, res, next) => {
 };
 exports.addLike = async (req, res, next) => {
   const { like, postId } = req.query;
+  console.log(like, postId);
   try {
     const post = await Post.findById(postId);
     if (!post) {
       throw generateError("Not Found", 404);
     }
-    if (like) {
+    if (like === "true") {
       await Post.findByIdAndUpdate(postId, { $push: { Likes: req.auth } });
     } else {
       await Post.findByIdAndUpdate(postId, { $pull: { Likes: req.auth } });
     }
+    const result = await Post.findById(postId, { Likes: 1 });
+    res.json(result);
   } catch (error) {
-    error.statusCode = err.statusCode || 500;
+    error.statusCode = error.statusCode || 500;
     next(error);
   }
 };
