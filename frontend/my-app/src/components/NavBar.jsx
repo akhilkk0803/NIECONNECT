@@ -1,16 +1,20 @@
 import React from "react";
 import logo from "../imgs/logo.png";
 import defaultLogo from "../imgs/Default_pfp.svg.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Avatar } from "@radix-ui/themes";
 import { Switch } from "@radix-ui/themes";
 import { BellIcon, ChatBubbleIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../store/userslice";
 const NavBar = () => {
   const [dark, setDark] = useState(true);
   const [open, setOpen] = useState(false);
-
+  const user = useSelector((state) => state.user?.user?.name);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const toggle = () => {
     if (!dark) {
       document.documentElement.classList.add("dark");
@@ -18,6 +22,10 @@ const NavBar = () => {
       document.documentElement.classList.remove("dark");
     }
     setDark((prev) => !prev);
+  };
+  const logouthandler = () => {
+    dispatch(removeUser());
+    return navigate("/login?type=student");
   };
   return (
     <div className="static shadow-md  p-2">
@@ -44,6 +52,7 @@ const NavBar = () => {
           {/* dark/lightmode */}
           <Switch defaultChecked onClick={toggle} />
           {dark ? "Dark" : "Light"}
+          {user && <button onClick={logouthandler}>Logout</button>}
         </div>
         <div
           className="block md:hidden "
@@ -94,6 +103,7 @@ const NavBar = () => {
           )}
         </AnimatePresence>
       </div>
+      {user && <h1>hi {user}</h1>}
     </div>
   );
 };
