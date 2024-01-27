@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { url } from "../../url";
 import { useDispatch } from "react-redux";
-import { setuser } from "../../store/userslice";
+import { setuser, removeUser } from "../../store/userslice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
 const Login = () => {
@@ -36,6 +36,10 @@ const Login = () => {
       }
       const User = await res.json();
       dispatch(setuser({ user: User.user.auth, token: User.token }));
+      // setTimeout(() => {
+      //   dispatch(removeUser());
+      //   console.log("removed")
+      // }, 9000);
       return navigate(`/profile/${user.username}`);
     } catch (e) {
       console.log(e.message);

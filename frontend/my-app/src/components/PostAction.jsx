@@ -7,9 +7,12 @@ import { token } from "../getToken";
 import Likes from "./Likes";
 import { useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
+import defaultLogo from "../imgs/Default_pfp.svg.png";
+
 const PostAction = ({ el, addComment, len }) => {
   const toast = useToast();
   const id = useSelector((state) => state.user?.user?._id);
+  const dp = useSelector((state) => state.user?.user?.dp);
   console.log(id);
   //const id = "659ea669191d7a4537fa7c94";
   const [comment, setComment] = useState("");
@@ -45,17 +48,34 @@ const PostAction = ({ el, addComment, len }) => {
       });
     }
   };
-  const submitComment = () => {
-    fetch(url + "post/comment", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: comment, postId: el._id }),
-    })
-      .then((res) => res.json())
-      .then((post) => addComment(post));
+  const submitComment = async () => {
+    try {
+      if (!id) {
+        throw new Error("LOGIN IN TO COMMENT");
+      }
+      if (comment.trim().length === 0) {
+        throw new Error("INVALID COMMENT");
+      }
+      const res = await fetch(url + "post/comment", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: comment, postId: el._id }),
+      });
+      const post = await res.json();
+      addComment(post);
+    } catch (error) {
+      return toast({
+        title: error.message,
+        description: "",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+    }
   };
   return (
     <>
@@ -88,12 +108,7 @@ const PostAction = ({ el, addComment, len }) => {
           </Popover.Trigger>
           <Popover.Content style={{ width: 360 }}>
             <div className="flex gap-3">
-              <Avatar
-                size="2"
-                src="https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?&w=64&h=64&dpr=2&q=70&crop=focalpoint&fp-x=0.67&fp-y=0.5&fp-z=1.4&fit=crop"
-                fallback="A"
-                radius="full"
-              />
+              <Avatar size="2" src={dp ? dp : defaultLogo} radius="full" />
               <div>
                 <TextArea
                   placeholder="Write a comment…"
