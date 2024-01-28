@@ -5,23 +5,16 @@ import { url } from "../url";
 import { Avatar } from "@radix-ui/themes";
 import ProfileInfo from "./ProfileInfo";
 import Posts from "./Posts";
+import { getUser } from "./util/users";
 const Profile = () => {
   const [userData, setUserData] = useState([]);
   const [error, setError] = useState(undefined);
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const { username } = params;
-  
+
   useEffect(() => {
-    fetch(url + "user/" + username)
-      .then((res) => {
-        if (res.status === 404) {
-          const error = new Error("User not found");
-          error.status = 404;
-          throw error;
-        }
-        return res.json();
-      })
+    getUser(username)
       .then((data) => {
         setUserData(data);
         setLoading(false);

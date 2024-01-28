@@ -55,7 +55,16 @@ const Likes = ({ likes, likehandler, likeState }) => {
           </svg>
         )}
       </div>
-      <span>{likes.length}</span>
+      <AnimatePresence>
+        <motion.span
+          initial={{ y: likeState ? -10 : 10 }}
+          key={likes.length}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {likes.length}
+        </motion.span>
+      </AnimatePresence>
     </div>
   );
 };

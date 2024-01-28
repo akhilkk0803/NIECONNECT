@@ -6,6 +6,7 @@ import { url } from "../url";
 import { token } from "../getToken";
 import Likes from "./Likes";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 import { useToast } from "@chakra-ui/react";
 import defaultLogo from "../imgs/Default_pfp.svg.png";
 
@@ -16,7 +17,9 @@ const PostAction = ({ el, addComment, len }) => {
   console.log(id);
   //const id = "659ea669191d7a4537fa7c94";
   const [comment, setComment] = useState("");
+  const [commentLoading, setCommentLoading] = useState(false);
   const [likes, setLikes] = useState(el.Likes);
+  const [likesLoading, setlikesLoading] = useState(false);
   const [likeState, setLikeState] = useState(
     !el.Likes.filter((el) => el === id).length > 0
   );
@@ -25,6 +28,8 @@ const PostAction = ({ el, addComment, len }) => {
       if (!id) {
         throw new Error("LOGIN IN TO LIKE");
       }
+      if (likesLoading) return;
+      setlikesLoading(true);
       const res = await fetch(
         url + "post/like?like=" + likeState + "&postId=" + el._id,
         {
@@ -35,6 +40,7 @@ const PostAction = ({ el, addComment, len }) => {
         }
       );
       const data = await res.json();
+      setlikesLoading(false);
       setLikes(data.Likes);
       setLikeState((prev) => !prev);
     } catch (error) {
@@ -53,6 +59,8 @@ const PostAction = ({ el, addComment, len }) => {
       if (!id) {
         throw new Error("LOGIN IN TO COMMENT");
       }
+      if (commentLoading) return;
+      setCommentLoading(true);
       if (comment.trim().length === 0) {
         throw new Error("INVALID COMMENT");
       }
@@ -65,6 +73,7 @@ const PostAction = ({ el, addComment, len }) => {
         body: JSON.stringify({ message: comment, postId: el._id }),
       });
       const post = await res.json();
+      setCommentLoading(false);
       addComment(post);
     } catch (error) {
       return toast({
@@ -79,7 +88,12 @@ const PostAction = ({ el, addComment, len }) => {
   };
   return (
     <>
-      <Likes likes={likes} likehandler={likehandler} likeState={!likeState} />
+      <Likes
+        likes={likes}
+        likehandler={likehandler}
+        likeState={!likeState}
+        loading={likesLoading}
+      />
       <div className="flex gap-2  items-center">
         <svg
           width="15"
@@ -95,13 +109,20 @@ const PostAction = ({ el, addComment, len }) => {
             clip-rule="evenodd"
           ></path>
         </svg>
-        <span>{len}</span>
+        <motion.span
+          initial={{ y: -10 }}
+          key={len}
+          animate={{ y: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {len}
+        </motion.span>
       </div>
 
       <div>
         <Popover.Root>
           <Popover.Trigger>
-            <Button className="button">
+            <Button className="button" disabled={commentLoading}>
               <ChatBubbleIcon width="16" height="16" />
               Comment
             </Button>
