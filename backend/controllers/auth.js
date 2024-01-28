@@ -87,7 +87,16 @@ exports.getCurrUser = async (req, res, next) => {
 };
 exports.getUser = async (req, res, next) => {
   const { username } = req.params;
+  const { suggestion } = req.query;
+  console.log(suggestion);
   try {
+    if (suggestion === "true") {
+      const users = await Auth.find({
+        username: { $regex: `${username}`, $options: "i" },
+      });
+      res.json(users);
+      return;
+    }
     const user = await Auth.findOne({ username });
     if (!user) {
       throw generateError("Not Found", 404);

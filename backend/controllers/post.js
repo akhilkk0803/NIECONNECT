@@ -94,7 +94,6 @@ exports.addComment = async (req, res, next) => {
 };
 exports.addLike = async (req, res, next) => {
   const { like, postId } = req.query;
-  console.log(like, postId);
   try {
     const post = await Post.findById(postId);
     if (!post) {
