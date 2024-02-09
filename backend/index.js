@@ -5,7 +5,6 @@ const clubRoutes = require("./routes/club");
 const deptRoutes = require("./routes/dept");
 const postRoutes = require("./routes/post");
 const userRoutes = require("./routes/user");
-const student = require("./models/student");
 const cors = require("cors");
 const app = express();
 require("dotenv").config();
