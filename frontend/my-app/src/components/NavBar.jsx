@@ -12,7 +12,7 @@ import { removeUser } from "../store/userslice";
 const NavBar = () => {
   const [dark, setDark] = useState(true);
   const [open, setOpen] = useState(false);
-  const user = useSelector((state) => state.user?.user?.name);
+  const user = useSelector((state) => state.user?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const toggle = () => {
@@ -35,20 +35,15 @@ const NavBar = () => {
             <img src={logo} alt="" className="h-10" />
           </NavLink>
         </div>
+        <div>
+          <NavLink to="/search">Search</NavLink>
+        </div>
         <div className=" items-center gap-5 md:flex hidden ">
-          <div className="dark:bg-black  bg-gray-200 px-3 py-2 rounded-3xl cursor-pointer">
-            <ChatBubbleIcon
-              height={20}
-              width={20}
-              className="dark:text-white"
-            />
-          </div>
-          <div className="dark:bg-black  bg-gray-200 px-3 py-2 rounded-3xl cursor-pointer">
-            <BellIcon fontSize={20} height={20} width={20} />
-          </div>
-          <NavLink to="/profile">
-            <Avatar src={defaultLogo} size="3" />
-          </NavLink>
+          {user?.username && (
+            <NavLink to={"/profile/" + user?.username}>
+              <Avatar src={defaultLogo} size="3" />
+            </NavLink>
+          )}
           {/* dark/lightmode */}
           <Switch defaultChecked onClick={toggle} />
           {dark ? "Dark" : "Light"}
@@ -70,22 +65,6 @@ const NavBar = () => {
             >
               <div onClick={() => setOpen(false)}>X</div>
               <div className=" items-center gap-5 flex flex-col  ">
-                <div className="dark:bg-black  bg-gray-200 px-3 py-2 rounded-3xl cursor-pointer">
-                  <ChatBubbleIcon
-                    height={20}
-                    width={20}
-                    className="dark:text-white"
-                    onClick={() => setOpen(false)}
-                  />
-                </div>
-                <div className="dark:bg-black  bg-gray-200 px-3 py-2 rounded-3xl cursor-pointer">
-                  <BellIcon
-                    fontSize={20}
-                    height={20}
-                    width={20}
-                    onClick={() => setOpen(false)}
-                  />
-                </div>
                 <NavLink to="/profile">
                   <Avatar
                     src={defaultLogo}
@@ -103,7 +82,7 @@ const NavBar = () => {
           )}
         </AnimatePresence>
       </div>
-      {user && <h1>hi {user}</h1>}
+      {user && <h1>hi {user.name}</h1>}
     </div>
   );
 };

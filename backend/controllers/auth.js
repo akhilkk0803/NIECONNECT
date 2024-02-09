@@ -79,7 +79,8 @@ exports.getCurrUser = async (req, res, next) => {
     if (!user) {
       throw generateError("Not Found", 404);
     }
-    res.json(user);
+    const socials = await Socials.findOne({ auth: user._id });
+    res.json({ user, socials });
   } catch (error) {
     error.statusCode = error.statusCode || 500;
     next(error);
@@ -120,6 +121,42 @@ exports.getUser = async (req, res, next) => {
     res.json({ user, socials });
   } catch (error) {
     error.statusCode = error.statusCode || 500;
+    next(error);
+  }
+};
+exports.follow = async (req, res, next) => {
+  const { request, user } = req.query;
+  console.log(request, user);
+  const id = req.auth;
+  try {
+    const targetuser = await Auth.findById(user);
+    if (!targetuser) {
+      const err = new Error("User not found");
+      err.statusCode = 404;
+      throw err;
+    }
+    const socials = await Socials.findOne({ auth: id });
+    if (request === "true") {
+      await Socials.findOneAndUpdate(
+        { auth: id },
+        { $push: { following: user } }
+      );
+      await Socials.findOneAndUpdate(
+        { auth: user },
+        { $push: { followers: id } }
+      );
+    } else if (request === "false") {
+      await Socials.findOneAndUpdate(
+        { auth: id },
+        { $pull: { following: user } }
+      );
+      await Socials.findOneAndUpdate(
+        { auth: user },
+        { $pull: { followers: id } }
+      );
+    }
+    res.json("OK");
+  } catch (error) {
     next(error);
   }
 };

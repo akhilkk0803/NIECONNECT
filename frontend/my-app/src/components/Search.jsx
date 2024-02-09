@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getUser } from "./util/users";
 import { Avatar } from "@radix-ui/themes";
 import { NavLink } from "react-router-dom";
 const Search = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const fetchUser = async (e) => {
+  const [text, setText] = useState("");
+  useEffect(() => {
     setLoading(true);
-    const res = await getUser(e.target.value, true);
-    setLoading(false);
-    console.log(res);
-    setSuggestions(res);
-  };
+    getUser(text, true).then((res) => {
+      setLoading(false);
+      setSuggestions(res);
+    });
+  }, [text]);
   return (
     <div>
       <div className=" relative inline-block w-full">
@@ -19,7 +20,7 @@ const Search = () => {
           type="text"
           className="text-black w-full  p-2  rounded-md "
           placeholder="searchUser"
-          onChange={fetchUser}
+          onChange={(e) => setText(e.target.value)}
         />
         {loading && (
           <p className="absolute right-1 text-xl text-black top-0">...</p>

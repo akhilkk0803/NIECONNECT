@@ -6,13 +6,16 @@ import { Avatar } from "@radix-ui/themes";
 import ProfileInfo from "./ProfileInfo";
 import Posts from "./Posts";
 import { getUser } from "./util/users";
+import { useSelector } from "react-redux";
+import Follow from "./Follow";
 const Profile = () => {
   const [userData, setUserData] = useState([]);
   const [error, setError] = useState(undefined);
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const { username } = params;
-
+  const socials = useSelector((state) => state.user?.socials);
+  console.log(socials);
   useEffect(() => {
     getUser(username)
       .then((data) => {
@@ -48,7 +51,9 @@ const Profile = () => {
               <p className="text-sm ">{userData.user.about}</p>
             </div>
             <ProfileInfo socials={userData.socials} />
+            <Follow el={userData} />
           </div>
+          <div></div>
         </div>
       </div>
       <div className="p-5">

@@ -5,6 +5,7 @@ import { Avatar } from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import PostImage from "./PostImage";
 import Time from "./util/Time";
+import { NavLink } from "react-router-dom";
 
 const SinglePost = ({ el }) => {
   const [comment, setComments] = useState([]);
@@ -23,13 +24,15 @@ const SinglePost = ({ el }) => {
       transition={{ duration: 1 }}
       viewport={{ once: true }}
     >
-      <div className="flex gap-3">
-        <Avatar src={el.auth.dp} radius="full" size="3" />
-        <div className="">
-          <p className="font-semibold ">{el.auth.name}</p>
-          <Time currTime={el.createdAt} />
+      <NavLink to={"/profile/" + el?.auth?.username}>
+        <div className="flex gap-3">
+          <Avatar src={el.auth.dp} radius="full" size="3" />
+          <div className="">
+            <p className="font-semibold ">{el.auth.name}</p>
+            <Time currTime={el.createdAt} />
+          </div>
         </div>
-      </div>
+      </NavLink>
       <div>
         <p className="text-sm text-blue-400 ">{el.caption}</p>
         <p className="text-sm text-blue-400 ">{el.hashtag}</p>

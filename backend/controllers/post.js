@@ -22,6 +22,7 @@ exports.getUserPost = async (req, res, next) => {
       if (!user) {
         throw generateError("User Not Found", 404);
       }
+
       const posts = await Socials.find(
         { auth: user._id },
         { posts: 1 }
@@ -36,8 +37,30 @@ exports.getUserPost = async (req, res, next) => {
 };
 exports.getAllPost = async (req, res, next) => {
   const auth = req.auth;
-  const posts = await Socials.find({ followers: auth }, { posts: 1 });
-  res.json(posts);
+  const followings = (await Socials.findOne({ auth }, { following: 1 }))
+    .following;
+  console.log(followings);
+  // const post = await Post.find({ auth: followings });
+  const post = followings.map(
+    async (id) =>
+      await Post.find({ auth: id })
+        .sort({ createdAt: -1 })
+        .limit(2)
+        .populate("auth")
+        .populate({
+          path: "comments",
+          populate: {
+            path: "user",
+          },
+        })
+  );
+  Promise.all(post).then((result) => {
+    console.log(...result);
+    res.json(result);
+  });
+  console.log(post);
+  // const posts = await Socials.find({ followers: auth }, { posts: 1 });
+  // res.json(post);
 };
 exports.getPost = async (req, res, next) => {
   const { id } = req.params;

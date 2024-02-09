@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setuser } from "./store/userslice";
 import { url } from "./url";
+import Search from "./components/Search";
 function App() {
   const dispatch = useDispatch();
   const router = createBrowserRouter([
@@ -50,6 +51,10 @@ function App() {
           path: "login",
           element: <Login />,
         },
+        {
+          path: "search",
+          element: <Search />,
+        },
       ],
     },
   ]);
@@ -64,7 +69,7 @@ function App() {
       });
       if (res.status === 401) return;
       const user = await res.json();
-      dispatch(setuser({ user, token }));
+      dispatch(setuser({ user: user.user, socials: user.socials, token }));
       console.log(user);
     };
     getuser();

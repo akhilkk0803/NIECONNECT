@@ -5,6 +5,7 @@ const clubRoutes = require("./routes/club");
 const deptRoutes = require("./routes/dept");
 const postRoutes = require("./routes/post");
 const userRoutes = require("./routes/user");
+const student = require("./models/student");
 const cors = require("cors");
 const app = express();
 require("dotenv").config();
@@ -21,6 +22,9 @@ app.use((err, req, res, next) => {
 });
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("CONNECTED TO MDB"))
+  .then(() => {
+    console.log("CONNECTED TO MDB");
+    student.find().then((res) => console.log(res));
+  })
   .catch((err) => console.log("Error connecting to mdb"));
 app.listen(8080, () => console.log("Server running on port 8080"));
