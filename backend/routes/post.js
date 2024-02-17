@@ -5,7 +5,7 @@ const multer = require("multer");
 const router = express.Router();
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./public");
+    cb(null, "./public/post");
   },
   filename: (req, file, cb) => {
     const extension = file.originalname.split(" ");

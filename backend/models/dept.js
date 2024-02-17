@@ -9,9 +9,18 @@ const deptSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "SocialInteraction",
     },
-    announcements: {
-      type: [String],
-    },
+    announcements: [
+      new mongoose.Schema(
+        {
+          message: String,
+          auth: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Auth",
+          },
+        },
+        { timestamps: true }
+      ),
+    ],
   },
   { timestamps: true }
 );

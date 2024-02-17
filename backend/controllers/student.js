@@ -20,6 +20,10 @@ exports.getUser = async (req, res, next) => {
 };
 exports.getCurrentUser = async (req, res, next) => {
   const user = await Student.findOne({ auth: req.userId }).populate("auth");
+  if (!user) {
+    res.status(404).json({ message: "NOT FOUIND" });
+    return;
+  }
   const token = getToken(user._id, req.userId);
   res.status(200).json({ user, token });
 };
@@ -29,8 +33,7 @@ exports.addUser = async (req, res, next) => {
       auth: req.userId,
       socials: req.socials,
     });
-    const token = getToken(created_user._id, req.userId);
-    res.json({ user: created_user, token });
+    next();
   } catch (error) {
     next(error);
   }

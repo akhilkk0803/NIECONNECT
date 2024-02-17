@@ -1,3 +1,4 @@
+const dept = require("../models/dept");
 const Dept = require("../models/dept");
 const jwt = require("jsonwebtoken");
 const generateError = (err, code) => {
@@ -34,13 +35,62 @@ exports.getDept = async (req, res, next) => {
   }
 };
 exports.addDept = async (req, res, next) => {
-  const dept = await Dept.create({
+  await Dept.create({
     auth: req.userId,
     socials: req.socials,
   });
-  const token = getToken(dept._id, req.userId);
-  res.status(200).json({ dept, token });
+  next();
 };
 exports.updateDept = async (req, res, next) => {
   res.json("OK");
+};
+exports.announce = async (req, res, next) => {
+  const auth = req.auth;
+  console.log(auth);
+  const { message } = req.body;
+  try {
+    const dept = await Dept.findOne({ auth });
+    if (!dept) {
+      throw generateError("dept NOT FOUND", 404);
+    }
+    const announcement = await Dept.findOneAndUpdate(
+      { auth },
+      {
+        $push: {
+          announcements: {
+            $each: [{ message, auth }],
+            $position: 0,
+          },
+        },
+      }
+    );
+    res.json(announcement);
+  } catch (error) {
+    next(error);
+  }
+};
+exports.getAnnounce = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const dept = await Dept.findOne({ auth: id }, { announcements: 1 });
+    if (!dept) {
+      throw generateError("Dept NOT FOUND", 404);
+    }
+    res.json(dept.announcements);
+  } catch (error) {
+    next(error);
+  }
+};
+exports.getAllAnnounce = async (req, res, next) => {
+  const { limits } = req.query;
+  let announcements = await Dept.find(
+    {},
+    { announcements: { $slice: -3 }, auth: 1, _id: 0 }
+  ).populate("announcements.auth");
+  announcements = announcements
+    .map((el) => el.announcements)
+    .flat(1)
+    .sort((a, b) => b.createdAt - a.createdAt)
+    .slice(0, parseInt(limits));
+  res.json(announcements);
 };

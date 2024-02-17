@@ -35,13 +35,61 @@ exports.getClub = async (req, res, next) => {
   }
 };
 exports.addClub = async (req, res, next) => {
-  const club = await Club.create({
+  await Club.create({
     auth: req.userId,
     socials: req.socials,
   });
-  const token = getToken(club._id, req.userId);
-  res.status(200).json({ club, token });
+  next();
 };
 exports.updateClub = async (req, res, next) => {
   res.json("OK");
+};
+exports.announce = async (req, res, next) => {
+  const auth = req.auth;
+  const { message } = req.body;
+  try {
+    const club = await Club.findOne({ auth });
+    if (!club) {
+      throw generateError("CLUB NOT FOUND", 404);
+    }
+    const announcement = await Club.findOneAndUpdate(
+      { auth },
+      {
+        $push: {
+          announcements: {
+            $each: [{ message, auth }],
+            $position: 0,
+          },
+        },
+      }
+    );
+    res.json(announcement);
+  } catch (error) {
+    next(error);
+  }
+};
+exports.getAnnounce = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const club = await Club.findOne({ auth: id }, { announcements: 1 });
+    if (!club) {
+      throw generateError("CLUB NOT FOUND", 404);
+    }
+    res.json(club.announcements);
+  } catch (error) {
+    next(error);
+  }
+};
+exports.getAllAnnounce = async (req, res, next) => {
+  const { limits } = req.query;
+  let announcements = await Club.find(
+    {},
+    { announcements: { $slice: -3 }, auth: 1, _id: 0 }
+  ).populate("announcements.auth");
+  announcements = announcements
+    .map((el) => el.announcements)
+    .flat(1)
+    .sort((a, b) => b.createdAt - a.createdAt)
+    .slice(0, parseInt(limits));
+  res.json(announcements);
 };

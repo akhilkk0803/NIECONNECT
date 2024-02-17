@@ -17,6 +17,15 @@ const postSchema = new mongoose.Schema(
       type: [mongoose.Schema.Types.ObjectId],
       ref: "Auth",
     },
+    foodList: [
+      {
+        food: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "foodData",
+        },
+        quantity: Number,
+      },
+    ],
     comments: [
       new mongoose.Schema(
         {

@@ -1,5 +1,5 @@
 import React from "react";
-import defaultLogo from "../../imgs/Default_pfp.svg.png";
+import defaultLogo from "../../public/assets/images/Default_pfp.svg.png";
 import { Avatar } from "@radix-ui/themes";
 const items = [
   {

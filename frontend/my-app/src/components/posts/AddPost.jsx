@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { url } from "../../url";
 import { TrashIcon } from "@radix-ui/react-icons";
-import { token } from "../../getToken";
+import { Input } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const AddPost = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user?.user?.username);
   const [post, setPost] = useState({
     caption: null,
     hashtag: null,
@@ -39,6 +44,7 @@ const AddPost = () => {
         Authorization: "Bearer " + token,
       },
     });
+    navigate("/profile/" + user);
   };
   const handleImages = async (e) => {
     const files = e.target.files;
@@ -69,34 +75,59 @@ const AddPost = () => {
     }));
   };
   return (
-    <form>
-      <input type="text" name="caption" onChange={handleChange} />
-      <br />
-      <input type="textarea" name="hashtag" onChange={handleChange} />
-      <input type="file" multiple onChange={handleImages} />
-      {/* priview */}
-
-      {uploaded.length > 0 && (
-        <div className="flex gap-3">
-          {uploaded.map((el) => (
-            <div className="relative">
-              <img
-                key={el}
-                src={`${url}public/${el}`}
-                className="w-32 rounded-2xl "
-                alt=""
-              />
-              <TrashIcon
-                className="absolute text-red-600 cursor-pointer right-0 bottom-0 bg-white"
-                onClick={() => deleteHandler(el)}
-              />
-            </div>
-          ))}
+    <div className="p-4 flex justify-center items-center w-full h-[70vh] ">
+      <form className="flex flex-col gap-3  shadow-[ rgba(0, 0, 0, 0.24) 0px 3px 8px]">
+        <h2 className="text-center">Create Post</h2>
+        <div className="flex items-center gap-2">
+          <label htmlFor="caption">Caption</label>
+          <Input
+            type="text"
+            name="caption"
+            placeholder="Jane Doe"
+            onChange={handleChange}
+          />
         </div>
-      )}
-
-      <button onClick={submitHandler}>submit</button>
-    </form>
+        <div className="flex items-center gap-2">
+          <label htmlFor="hashtag">HashTags</label>
+          <Input
+            type="textarea"
+            name="hashtag"
+            placeholder="#first #new"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <label htmlFor="">Images</label>
+          <Input type="file" multiple onChange={handleImages} />
+        </div>
+        {/* priview */}
+        <div>
+          {uploaded.length > 0 && (
+            <div className="flex gap-3">
+              {uploaded.map((el) => (
+                <div className="relative">
+                  <img
+                    key={el}
+                    src={`${url}public/post/${el}`}
+                    className="w-32 rounded-2xl "
+                    alt=""
+                  />
+                  <TrashIcon
+                    className="absolute text-red-600 cursor-pointer right-0 bottom-0 bg-white"
+                    onClick={() => deleteHandler(el)}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="flex justify-center">
+          <button onClick={submitHandler} className="button ">
+            submit
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

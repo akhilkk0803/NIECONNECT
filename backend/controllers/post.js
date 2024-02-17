@@ -38,7 +38,11 @@ exports.getUserPost = async (req, res, next) => {
 exports.getAllPost = async (req, res, next) => {
   const auth = req.auth;
   const followings = (await Socials.findOne({ auth }, { following: 1 }))
-    .following;
+    ?.following;
+  if (!followings) {
+    res.status(404).json({ message: "NOT FOUND" });
+    return;
+  }
   console.log(followings);
   // const post = await Post.find({ auth: followings });
   const post = followings.map(
@@ -97,7 +101,7 @@ exports.uploadPic = async (req, res, next) => {
 exports.updatePost = async (req, res, next) => {};
 exports.deletePic = async (req, res, next) => {
   const { img } = req.body;
-  await fs.unlink("public/" + img, (err) => {
+  await fs.unlink("public/post/" + img, (err) => {
     if (err) {
       console.log(err);
     } else res.json("OK");

@@ -1,4 +1,8 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useNavigate,
+} from "react-router-dom";
 import Root from "./components/Root";
 import Profile from "./components/Profile";
 import Home from "./components/Home";
@@ -14,9 +18,12 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setuser } from "./store/userslice";
 import { url } from "./url";
+import Auth from "./components/auth/Auth";
 import Search from "./components/Search";
+import Edit from "./components/Edit";
 function App() {
   const dispatch = useDispatch();
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -54,6 +61,14 @@ function App() {
         {
           path: "search",
           element: <Search />,
+        },
+        {
+          path: "auth",
+          element: <Auth />,
+        },
+        {
+          path: "edit",
+          element: <Edit />,
         },
       ],
     },

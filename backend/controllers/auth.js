@@ -7,7 +7,9 @@ const generateError = (err, code) => {
   return error;
 };
 exports.signUp = async (req, res, next) => {
+  console.log(req.body);
   const { username, password, name, dp, about } = req.body;
+  console.log(username, password, name, dp, about);
   try {
     const user = await Auth.findOne({ username });
     if (user) {
@@ -20,6 +22,7 @@ exports.signUp = async (req, res, next) => {
       name,
       dp,
       about,
+      type: req.type,
     });
     req.userId = created_auth._id;
     next();
@@ -45,27 +48,27 @@ exports.logIn = async (req, res, next) => {
   }
 };
 exports.update = async (req, res, next) => {
-  const { username, password, name, dp } = req.body;
+  const { username, dp, about, name } = req.body;
   const auth = req.auth;
   console.log(auth);
   try {
     const currUser = await Auth.findById(auth);
-    const user = await Auth.findOne({
+    const Exsitinguser = await Auth.findOne({
       _id: {
         $ne: currUser._id,
       },
       username,
     });
-    if (user) {
+    if (Exsitinguser) {
       throw generateError("User name already exists", 403);
     }
-    const hashpw = bcrypt.hashSync(password, 10);
-    const uploaded = await Auth.findByIdAndUpdate(currUser._id, {
+    let uploaded = await Auth.findByIdAndUpdate(currUser._id, {
       username,
-      password: hashpw,
+      about,
       name,
       dp,
     });
+    uploaded = await Auth.findById(currUser._id);
     res.json(uploaded);
   } catch (error) {
     error.statusCode = error.statusCode || 500;
@@ -159,4 +162,9 @@ exports.follow = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+exports.getTypeSpecific = async (req, res, next) => {
+  const { type } = req.params;
+  const data = await Auth.find({ type });
+  res.json(data);
 };

@@ -3,6 +3,8 @@ import React, { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import Time from "./util/Time";
+import { url } from "../url";
+import Creator from "./Creator";
 const PostComments = ({ comments }) => {
   const [show, setShow] = useState(false);
 
@@ -30,25 +32,25 @@ const PostComments = ({ comments }) => {
                 variants={{ collapsed: { scale: 0.8 }, open: { scale: 1 } }}
                 transition={{ duration: 0.8 }}
               >
-                <Avatar src={el.user?.dp} radius="full" />
-                <div>
-                  <p className="text-sm font-semibold">{el.user?.username}</p>
-                  <Time currTime={el.createdAt} />
-                  <p className="text-sm">{el?.message}</p>
-                </div>
+                <Creator
+                  username={el.user?.username}
+                  time={el.createdAt}
+                  dp={el.user?.dp}
+                  message={el?.message}
+                />
               </motion.div>
             ))}
           </motion.div>
         )}{" "}
       </AnimatePresence>
       {!show && comments.length > 0 && (
-        <div className="flex gap-3 mt-3 bg-slate-400 px-6 py-3   rounded-2xl w-fit ">
-          <Avatar src={comments[0].user?.dp} radius="full" />
-          <div>
-            <p className="text-sm font-semibold">{comments[0].user?.username}</p>
-            <Time currTime={comments[0].createdAt} />
-            <p className="text-sm">{comments[0]?.message}</p>
-          </div>
+        <div className="flex flex-col gap-3 mt-3 bg-slate-400 px-6 py-3   rounded-2xl w-fit ">
+          <Creator
+            username={comments[0].user?.username}
+            time={comments[0].createdAt}
+            dp={comments[0].user?.dp}
+            message={comments[0]?.message}
+          />
         </div>
       )}
       {comments.length > 1 && (

@@ -9,17 +9,17 @@ const PostImage = ({ el }) => {
   return (
     <div className="flex items-center justify-center mt-3 ">
       <AnimatePresence>
-        <div className="h-[500px] max-w-[60%] relative ">
+        <div className="md:h-[500px]  max-w-screen-sm aspect-square md:max-w-[60%] relative ">
           <motion.img
-            src={url + "public/" + el[curr]}
+            src={url + "public/post/" + el[curr]}
             key={el[curr]}
-            exit={{ x: dir == "left" ? -300 : 300, opacity: 0 }}
+            exit={{ x: dir == "left" ? -1000 : 300, opacity: 0 }}
             transition={{ duration: 0.1 }}
             initial={{ x: dir == "left" ? -100 : 100, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             alt="post"
             className=" object-center 
-             w-full max-h-full mb-3 aspect-square rounded-md "
+             max-w-full h-full mb-3  rounded-md "
             loading="lazy"
           />
           {n > 1 && (
@@ -48,7 +48,7 @@ const PostImage = ({ el }) => {
                   {[...new Array(n)].map((_, i) => (
                     <div
                       className={` mr-3 rounded-[50%] bg-white p-[4px] ${
-                        curr == i ? "bg-white" : "bg-blue-700"
+                        curr == i ? "bg-white" : "bg-blue-800"
                       } cursor-pointer shadow-lg`}
                       onClick={() => {
                         setDir(curr > i ? "left" : "right");

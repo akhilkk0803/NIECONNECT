@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PostAction from "./PostAction";
 import PostComments from "./PostComments";
-import { Avatar } from "@radix-ui/themes";
 import { motion } from "framer-motion";
 import PostImage from "./PostImage";
 import Time from "./util/Time";
 import { NavLink } from "react-router-dom";
+import { url } from "../url";
+import PostCreator from "./Creator";
 
 const SinglePost = ({ el }) => {
   const [comment, setComments] = useState([]);
@@ -18,21 +19,19 @@ const SinglePost = ({ el }) => {
   };
   return (
     <motion.div
-      className="post"
+      className="post  dark:bg-gray-950 shadow-blue-900
+       md:ml-3 shadow-sm "
       initial={{ opacity: 0, y: -30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}
       viewport={{ once: true }}
     >
-      <NavLink to={"/profile/" + el?.auth?.username}>
-        <div className="flex gap-3">
-          <Avatar src={el.auth.dp} radius="full" size="3" />
-          <div className="">
-            <p className="font-semibold ">{el.auth.name}</p>
-            <Time currTime={el.createdAt} />
-          </div>
-        </div>
-      </NavLink>
+      <PostCreator
+        dp={el?.auth?.dp}
+        name={el?.auth?.name}
+        time={el?.createdAt}
+        username={el?.auth?.username}
+      />
       <div>
         <p className="text-sm text-blue-400 ">{el.caption}</p>
         <p className="text-sm text-blue-400 ">{el.hashtag}</p>

@@ -1,21 +1,28 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { json, useParams } from "react-router-dom";
+import { NavLink, json, useParams } from "react-router-dom";
 import { url } from "../url";
 import { Avatar } from "@radix-ui/themes";
 import ProfileInfo from "./ProfileInfo";
 import Posts from "./Posts";
 import { getUser } from "./util/users";
 import { useSelector } from "react-redux";
+import { Badge } from "@chakra-ui/react";
+
 import Follow from "./Follow";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import Announcement from "./Announcement";
+import Loading from "./util/Loading";
+import Edit from "./Edit";
+import ProfileImage from "./ProfileImage";
+
 const Profile = () => {
   const [userData, setUserData] = useState([]);
   const [error, setError] = useState(undefined);
   const [loading, setLoading] = useState(true);
   const params = useParams();
   const { username } = params;
-  const socials = useSelector((state) => state.user?.socials);
-  console.log(socials);
+  const user = useSelector((state) => state.user?.user?._id);
   useEffect(() => {
     getUser(username)
       .then((data) => {
@@ -36,30 +43,81 @@ const Profile = () => {
     );
   }
   if (loading) {
-    return <h1>Loading....</h1>;
+    return <Loading />;
   }
   return (
     <div className="container ">
       <div>
         <div className="flex justify-center gap-6">
-          <div className=" ">
-            <Avatar src={userData.user.dp} radius="full" size="8" />
-          </div>
+          <ProfileImage dp={userData.user.dp} name={userData.user.name} />
           <div className="flex flex-col gap-3 items-start ">
             <div>
-              <p className="font-semibold text-lg">{userData.user.username}</p>
+              <div className="flex gap-2">
+                <p className="font-semibold text-lg">
+                  {userData.user.username}
+                </p>
+                <span>
+                  <Badge colorScheme="blue">{userData.user.type}</Badge>
+                </span>
+              </div>
               <p className="text-sm ">{userData.user.about}</p>
             </div>
             <ProfileInfo socials={userData.socials} />
             <Follow el={userData} />
+            {userData?.user?._id === user && (
+              <NavLink
+                to="/edit"
+                className="flex items-center bg-slate-900 p-2 rounded-lg"
+              >
+                <span>Edit</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 19l7-7 3 3-7 7-3-3z" />
+                  <path d="M10 9L9 4l5 1z" />
+                </svg>
+              </NavLink>
+            )}
           </div>
           <div></div>
         </div>
       </div>
-      <div className="p-5">
-        <div className="flex flex-col md:ml-52 md:mr-52">
-          <Posts post={userData.socials.posts} />
-        </div>
+      <div className="p-5 ">
+        <Tabs variant="soft-rounded">
+          <TabList className="w-full">
+            <div className="flex justify-center w-full">
+              <Tab>Posts</Tab>
+              {userData?.user?.type != "student" && <Tab>Announcement</Tab>}
+            </div>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <div className="flex flex-col md:ml-52 md:mr-52">
+                <Posts post={userData.socials.posts} />
+              </div>
+            </TabPanel>
+            <TabPanel
+              style={{
+                display: "flex",
+                justifyContent:'center'
+              }}
+            >
+              <Announcement
+                type={userData?.user?.type}
+                auth={userData?.user?._id}
+                user={userData?.user}
+              />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </div>
     </div>
   );

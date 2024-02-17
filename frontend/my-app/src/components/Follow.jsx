@@ -2,9 +2,10 @@ import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { url } from "../url";
-import { token } from "../getToken";
 
 const Follow = ({ el }) => {
+  const token = localStorage.getItem("token");
+
   if (!token) return;
   console.log(el);
   const socials = useSelector((state) => state.user?.socials);

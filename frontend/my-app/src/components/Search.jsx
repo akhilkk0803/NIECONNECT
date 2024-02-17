@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getUser } from "./util/users";
 import { Avatar } from "@radix-ui/themes";
 import { NavLink } from "react-router-dom";
+import { url } from "../url";
+import { Badge, Skeleton, SkeletonText, Stack } from "@chakra-ui/react";
 const Search = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -12,6 +14,10 @@ const Search = () => {
       setLoading(false);
       setSuggestions(res);
     });
+    return () => {
+      setLoading(false);
+      console.log("cleaned");
+    };
   }, [text]);
   return (
     <div>
@@ -29,14 +35,30 @@ const Search = () => {
       {suggestions.length > 0 && (
         <div className="flex flex-col gap-3">
           {suggestions.map((el) => (
-            <NavLink to={"/profile/" + el.username}>
-              <div className="flex">
-                <Avatar src={el.dp} />
-                <p>{el.username}</p>
-              </div>
-            </NavLink>
+            <div
+              className="px-7 py-4 
+            bg-gray-400
+            dark:bg-slate-900 dark:hover:bg-blue-950
+            hover:bg-gray-500
+            cursor-pointer rounded-full w-fit  "
+            >
+              <NavLink to={"/profile/" + el.username}>
+                <div className="flex">
+                  <Avatar src={url + "public/dp/" + el.dp} />
+                  <div className="flex flex-col items-center">
+                    <p>{el.username}</p>
+                    <Badge>{el.type}</Badge>
+                  </div>
+                </div>
+              </NavLink>
+            </div>
           ))}
         </div>
+      )}
+      {loading && (
+        <Stack>
+          <SkeletonText mt="4" noOfLines={4} spacing="4" skeletonHeight="2" />
+        </Stack>
       )}
     </div>
   );

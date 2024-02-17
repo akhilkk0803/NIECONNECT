@@ -1,6 +1,6 @@
 import React from "react";
-import logo from "../imgs/logo.png";
-import defaultLogo from "../imgs/Default_pfp.svg.png";
+import logo from "../public/assets/images/logo.png";
+import defaultLogo from "../public/assets/images/Default_pfp.svg.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Avatar } from "@radix-ui/themes";
 import { Switch } from "@radix-ui/themes";
@@ -9,12 +9,14 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../store/userslice";
+import { url } from "../url";
 const NavBar = () => {
   const [dark, setDark] = useState(true);
   const [open, setOpen] = useState(false);
   const user = useSelector((state) => state.user?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const toggle = () => {
     if (!dark) {
       document.documentElement.classList.add("dark");
@@ -25,23 +27,26 @@ const NavBar = () => {
   };
   const logouthandler = () => {
     dispatch(removeUser());
-    return navigate("/login?type=student");
+    return navigate("/auth?type=student");
   };
   return (
-    <div className="static shadow-md  p-2">
+    <div className="static shadow-lg shadow-gray-900 mb-10 p-2">
       <div className="flex   md:flex-row p-4 rounded-lg  justify-between items-center">
         <div>
           <NavLink to="/">
             <img src={logo} alt="" className="h-10" />
           </NavLink>
         </div>
-        <div>
-          <NavLink to="/search">Search</NavLink>
-        </div>
+
         <div className=" items-center gap-5 md:flex hidden ">
           {user?.username && (
             <NavLink to={"/profile/" + user?.username}>
-              <Avatar src={defaultLogo} size="3" />
+              <Avatar
+                src={url + "public/dp/" + user?.dp}
+                size="3"
+                radius="full"
+                fallback={user?.name?.substring(0, 2)}
+              />
             </NavLink>
           )}
           {/* dark/lightmode */}
@@ -61,11 +66,11 @@ const NavBar = () => {
               initial={{ x: 300 }}
               animate={{ x: 0 }}
               exit={{ x: 300 }}
-              className="fixed right-0 z-10 bg-slate-200  dark:bg-gray-800 w-[30%] top-0 flex flex-col justify-normal items-end p-3 h-full"
+              className="fixed right-0 z-10  w-[40%] top-0 flex flex-col justify-normal items-end p-3 h-full"
             >
               <div onClick={() => setOpen(false)}>X</div>
               <div className=" items-center gap-5 flex flex-col  ">
-                <NavLink to="/profile">
+                <NavLink to={"/profile/" + user?.username}>
                   <Avatar
                     src={defaultLogo}
                     size="3"

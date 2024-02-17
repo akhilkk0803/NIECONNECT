@@ -3,14 +3,15 @@ import { Avatar, Button, Flex, Popover, TextArea } from "@radix-ui/themes";
 import React from "react";
 import { useState } from "react";
 import { url } from "../url";
-import { token } from "../getToken";
 import Likes from "./Likes";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { useToast } from "@chakra-ui/react";
-import defaultLogo from "../imgs/Default_pfp.svg.png";
+import defaultLogo from "../public/assets/images/Default_pfp.svg.png";
 
 const PostAction = ({ el, addComment, len }) => {
+  const token = localStorage.getItem("token");
+
   const toast = useToast();
   const id = useSelector((state) => state.user?.user?._id);
   const dp = useSelector((state) => state.user?.user?.dp);
@@ -129,7 +130,11 @@ const PostAction = ({ el, addComment, len }) => {
           </Popover.Trigger>
           <Popover.Content style={{ width: 360 }}>
             <div className="flex gap-3">
-              <Avatar size="2" src={dp ? dp : defaultLogo} radius="full" />
+              <Avatar
+                size="2"
+                src={dp ? url + "public/dp/" + dp : defaultLogo}
+                radius="full"
+              />
               <div>
                 <TextArea
                   placeholder="Write a comment…"
