@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
+
 const Likes = ({ likes, likehandler, likeState }) => {
   return (
     <div className="flex items-center gap-2  ">
@@ -61,6 +62,7 @@ const Likes = ({ likes, likehandler, likeState }) => {
           key={likes.length}
           animate={{ y: 0 }}
           transition={{ duration: 0.3 }}
+          className="cursor-pointer"
         >
           {likes.length}
         </motion.span>

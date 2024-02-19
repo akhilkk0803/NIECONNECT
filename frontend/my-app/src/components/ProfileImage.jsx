@@ -25,10 +25,12 @@ const ProfileImage = ({ dp, name }) => {
         radius="full"
         size="8"
       />
-      <Modal isOpen={isOpen} onClose={onClose}
-      isCentered
-      motionPreset='slideInRight'
-      size='md'
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        isCentered
+        motionPreset="slideInRight"
+        size="md"
       >
         <ModalOverlay />
         <ModalContent>

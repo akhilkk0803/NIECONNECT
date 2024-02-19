@@ -30,7 +30,6 @@ const Profile = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err.status);
         setError({ msg: err.message, status: err.status });
       });
   }, [username]);
@@ -67,7 +66,9 @@ const Profile = () => {
             {userData?.user?._id === user && (
               <NavLink
                 to="/edit"
-                className="flex items-center bg-slate-900 p-2 rounded-lg"
+                className="flex items-center dark:bg-slate-900
+                bg-slate-500
+                p-2 rounded-lg"
               >
                 <span>Edit</span>
                 <svg
@@ -107,7 +108,7 @@ const Profile = () => {
             <TabPanel
               style={{
                 display: "flex",
-                justifyContent:'center'
+                justifyContent: "center",
               }}
             >
               <Announcement

@@ -48,7 +48,7 @@ const PostImage = ({ el }) => {
                   {[...new Array(n)].map((_, i) => (
                     <div
                       className={` mr-3 rounded-[50%] bg-white p-[4px] ${
-                        curr == i ? "bg-white" : "bg-blue-800"
+                        curr == i ? "bg-white" : "bg-blue-700"
                       } cursor-pointer shadow-lg`}
                       onClick={() => {
                         setDir(curr > i ? "left" : "right");

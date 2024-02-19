@@ -21,9 +21,6 @@ app.use((err, req, res, next) => {
 });
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("CONNECTED TO MDB");
-    student.find().then((res) => console.log(res));
-  })
+  .then(() => console.log("CONNECTED TO MDB"))
   .catch((err) => console.log("Error connecting to mdb"));
 app.listen(8080, () => console.log("Server running on port 8080"));

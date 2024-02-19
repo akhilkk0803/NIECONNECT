@@ -13,6 +13,9 @@ export default {
       backgroundColor: {
         auth: "#00111f",
       },
+      fontFamily:{
+        
+      }
     },
   },
   plugins: [],

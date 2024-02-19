@@ -1,4 +1,5 @@
 const Auth = require("../models/auth");
+const SocialInteraction = require("../models/SocialInteraction");
 const Socials = require("../models/SocialInteraction");
 const bcrypt = require("bcryptjs");
 const generateError = (err, code) => {
@@ -120,7 +121,9 @@ exports.getUser = async (req, res, next) => {
         populate: {
           path: "auth",
         },
-      });
+      })
+      .populate("following")
+      .populate("followers");
     res.json({ user, socials });
   } catch (error) {
     error.statusCode = error.statusCode || 500;
