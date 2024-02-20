@@ -90,7 +90,7 @@ const NavBar = () => {
           )}
         </AnimatePresence>
       </div>
-      {user && <h1>hi {user.name}</h1>}
+      {user && <h1>Welcome {user.name}</h1>}
     </div>
   );
 };
