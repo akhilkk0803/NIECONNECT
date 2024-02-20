@@ -11,10 +11,7 @@ require("dotenv").config();
 app.use(express.json());
 app.use(cors());
 app.use("/public", express.static(__dirname + "/public/"));
-app.use("/", (req, res, next) => {
-  res.json("WELCOME");
-  next();
-});
+
 app.use("/student", studentRoutes);
 app.use("/club", clubRoutes);
 app.use("/dept", deptRoutes);
