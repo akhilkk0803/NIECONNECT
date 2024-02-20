@@ -71,13 +71,12 @@ const Signup = ({ edit = false, currUser }) => {
     e.preventDefault();
     const method = edit ? "PUT" : "POST";
     const uri = edit ? "user" : myParam + "/new";
-    if (
-      !user.username ||
-      (!edit && !user.password) ||
-      !user.name ||
-      (!edit && user.password.trim().length < 7)
-    ) {
+    if (!user.username || (!edit && !user.password) || !user.name) {
       returnToast({ message: "Fill all fields" });
+      return;
+    }
+    if (!edit && user.password.trim().length < 7) {
+      returnToast({ message: "Password should be minimum of length 7" });
       return;
     }
     if (!edit && confirmPassword != user.password) {
@@ -142,7 +141,11 @@ const Signup = ({ edit = false, currUser }) => {
 
     justify-center flex-col items-center "
     >
-      {!edit ? <h3>Signup as {myParam}</h3> : <h3>Edit your Profile</h3>}
+      {!edit ? (
+        <h1 className="text-xl">Signup as {myParam}</h1>
+      ) : (
+        <h2>Edit your Profile</h2>
+      )}
       <form action="">
         <div className="flex flex-col gap-3">
           <div>

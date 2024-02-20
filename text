@@ -1,0 +1,61 @@
+/
+  /main
+    /clubs
+      - POST /login
+      - GET /:id
+      - POST /new
+        - Middleware: typeMiddleware
+        - POST /signup
+        - POST /create
+        - POST /add
+        - GET /current
+      - GET /announce/:id
+      - GET /announce
+      - POST /announce
+      - PUT /update
+      - GET /announcements/all
+    /depts
+      - POST /login
+      - GET /:id
+      - POST /new
+        - Middleware: typeMiddleware
+        - POST /signup
+        - POST /create
+        - POST /add
+        - GET /current
+      - POST /announce
+      - GET /announce/:id
+      - GET /announcements/all
+    /posts
+      - POST /login
+      - GET /:id
+      - POST /new
+        - Middleware: typeMiddleware
+        - POST /signup
+        - POST /create
+        - POST /add
+        - GET /current
+      - GET /announce/:id
+      - GET /announce
+      - POST /announce
+      - PUT /update
+      - GET /announcements/all
+    /students
+      - POST /login
+      - GET /:id
+      - POST /new
+        - Middleware: typeMiddleware
+        - POST /signup
+        - POST /create
+        - POST /add
+        - GET /current
+    /users
+      - PUT /update
+      - GET /:username
+      - GET /
+        - Middleware: isAuth
+        - GET /current
+        - PUT /follow
+        - POST /dp
+          - Middleware: upload.single("dp")
+        - GET /all/:type

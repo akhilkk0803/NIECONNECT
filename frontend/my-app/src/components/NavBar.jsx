@@ -66,7 +66,10 @@ const NavBar = () => {
               initial={{ x: 300 }}
               animate={{ x: 0 }}
               exit={{ x: 300 }}
-              className="fixed right-0 z-10  w-[40%] top-0 flex flex-col justify-normal items-end p-3 h-full"
+              className="fixed right-0 z-10  
+              
+              bg-slate-900
+              w-[40%] top-0 flex flex-col justify-normal items-end p-3 h-full"
             >
               <div onClick={() => setOpen(false)}>X</div>
               <div className=" items-center gap-5 flex flex-col  ">

@@ -31,7 +31,7 @@ const RecentAnnouncements = ({ type }) => {
   return (
     <div className="md:border-l-2 pl-2 border-l-gray-800">
       <h3>Recent Club Announcements</h3>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         {clubloading && (
           <Stack>
             <Skeleton height="20px" />
@@ -44,8 +44,8 @@ const RecentAnnouncements = ({ type }) => {
         {clubData.map((el) => (
           <div
             className="dark:bg-slate-900 
-          bg-gray-400
-          text-sm  p-1 rounded-lg"
+         
+          text-sm  p-4 rounded-lg"
           >
             <Creator
               dp={el.auth?.dp}
@@ -59,7 +59,7 @@ const RecentAnnouncements = ({ type }) => {
       </div>
       <hr />
       <h3 className="mt-3">Recent Dept Announcements</h3>
-      <div className="flex flex-col  gap-2">
+      <div className="flex flex-col  gap-3">
         {deptloading && (
           <Stack>
             <Skeleton height="20px" />
@@ -71,8 +71,9 @@ const RecentAnnouncements = ({ type }) => {
         {deptData.map((el) => (
           <div
             className="dark:bg-slate-900 
-          bg-gray-400
-          text-sm  p-1 rounded-lg"
+          text-sm 
+          p-4
+          rounded-lg"
           >
             <Creator
               dp={el.auth?.dp}

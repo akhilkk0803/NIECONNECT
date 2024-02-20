@@ -17,7 +17,7 @@ const ProfileInfo = ({ socials }) => {
 
   return (
     <div>
-      <div className="flex justify-center gap-5 items-center">
+      <div className="flex justify-center flex-wrap gap-5 items-center">
         <div className="flex flex-col items-center">
           <h5> {socials.posts.length}</h5>
           <p className="dark:text-slate-300">Posts</p>

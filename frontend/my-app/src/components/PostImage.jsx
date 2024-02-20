@@ -9,7 +9,11 @@ const PostImage = ({ el }) => {
   return (
     <div className="flex items-center justify-center mt-3 ">
       <AnimatePresence>
-        <div className="md:h-[500px]  max-w-screen-sm aspect-square md:max-w-[60%] relative ">
+        <div
+          className="
+        sm:w-full md:w-1/2
+        relative "
+        >
           <motion.img
             src={url + "public/post/" + el[curr]}
             key={el[curr]}
@@ -19,8 +23,10 @@ const PostImage = ({ el }) => {
             animate={{ x: 0, opacity: 1 }}
             alt="post"
             className=" object-center 
-             max-w-full h-full mb-3  rounded-md "
-            loading="lazy"
+             w-full  mb-3 
+             h-auto rounded-md
+             aspect-square
+         "
           />
           {n > 1 && (
             <>

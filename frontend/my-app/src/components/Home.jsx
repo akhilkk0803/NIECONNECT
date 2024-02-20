@@ -32,7 +32,7 @@ const Home = () => {
   }, [user]);
   return (
     <div className={` px-3  w-full`}>
-      <div className="grid md:grid-cols-[0.8fr,3fr,1fr]">
+      <div className="grid md:grid-cols-[0.8fr,2.9fr,1fr]">
         <Sidebar />
         <div className="flex flex-col mr-3">
           <div className="handleOverflow">

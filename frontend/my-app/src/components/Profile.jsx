@@ -47,9 +47,9 @@ const Profile = () => {
   return (
     <div className="container ">
       <div>
-        <div className="flex justify-center gap-6">
+        <div className="flex justify-center gap-6 wrap">
           <ProfileImage dp={userData.user.dp} name={userData.user.name} />
-          <div className="flex flex-col gap-3 items-start ">
+          <div className="flex flex-col gap-3 items-start md:max-w-[25%] ">
             <div>
               <div className="flex gap-2">
                 <p className="font-semibold text-lg">
@@ -59,7 +59,9 @@ const Profile = () => {
                   <Badge colorScheme="blue">{userData.user.type}</Badge>
                 </span>
               </div>
-              <p className="text-sm ">{userData.user.about}</p>
+              <p className="text-sm whitespace-pre-line break-words ">
+                {userData.user.about}
+              </p>
             </div>
             <ProfileInfo socials={userData.socials} />
             <Follow el={userData} />

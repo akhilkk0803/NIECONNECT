@@ -24,7 +24,9 @@ const Search = () => {
       <div className=" relative inline-block w-full">
         <input
           type="text"
-          className="text-black w-full  p-2  rounded-md "
+          className="text-black w-full  dark:focus:border-slate-800
+          bg-slate-50
+          p-2  rounded-md "
           placeholder="searchUser"
           onChange={(e) => setText(e.target.value)}
         />
@@ -36,14 +38,15 @@ const Search = () => {
         <div className="flex flex-col gap-3">
           {suggestions.map((el) => (
             <div
-              className="px-7 py-4 
+              className="px-7 py-5
             bg-gray-400
             dark:bg-slate-900 dark:hover:bg-blue-950
             hover:bg-gray-500
+            
             cursor-pointer rounded-full w-fit  "
             >
               <NavLink to={"/profile/" + el.username}>
-                <div className="flex">
+                <div className="flex gap-3 ">
                   <Avatar src={url + "public/dp/" + el.dp} />
                   <div className="flex flex-col items-center">
                     <p>{el.username}</p>

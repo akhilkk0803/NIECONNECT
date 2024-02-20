@@ -77,7 +77,7 @@ const Login = () => {
       className="flex justify-center flex-col 
       items-center"
     >
-      <h3 className="">Login as {myParam}</h3>
+      <h3 className="text-xl">Login as {myParam}</h3>
       <form action="">
         <div className="flex flex-col gap-3">
           <div>
