@@ -6,8 +6,8 @@ import {
   differenceInMinutes,
 } from "date-fns";
 const Time = ({ currTime }) => {
-  let time = 1,
-  type = "second";
+  let time = 1;
+  let type = "second";
   const getTime = (...fn) => {
     for (let i = 0; i < fn.length; i++) {
       const temp = fn[i](new Date(), currTime);
