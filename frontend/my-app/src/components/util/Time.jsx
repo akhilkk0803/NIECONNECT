@@ -6,7 +6,6 @@ import {
   differenceInMinutes,
 } from "date-fns";
 const Time = ({ currTime }) => {
-  console.log(currTime);
   let time = 1,
   type = "second";
   const getTime = (...fn) => {
