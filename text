@@ -1,61 +1,11 @@
-/
-  /main
-    /clubs
-      - POST /login
-      - GET /:id
-      - POST /new
-        - Middleware: typeMiddleware
-        - POST /signup
-        - POST /create
-        - POST /add
-        - GET /current
-      - GET /announce/:id
-      - GET /announce
-      - POST /announce
-      - PUT /update
-      - GET /announcements/all
-    /depts
-      - POST /login
-      - GET /:id
-      - POST /new
-        - Middleware: typeMiddleware
-        - POST /signup
-        - POST /create
-        - POST /add
-        - GET /current
-      - POST /announce
-      - GET /announce/:id
-      - GET /announcements/all
-    /posts
-      - POST /login
-      - GET /:id
-      - POST /new
-        - Middleware: typeMiddleware
-        - POST /signup
-        - POST /create
-        - POST /add
-        - GET /current
-      - GET /announce/:id
-      - GET /announce
-      - POST /announce
-      - PUT /update
-      - GET /announcements/all
-    /students
-      - POST /login
-      - GET /:id
-      - POST /new
-        - Middleware: typeMiddleware
-        - POST /signup
-        - POST /create
-        - POST /add
-        - GET /current
-    /users
-      - PUT /update
-      - GET /:username
-      - GET /
-        - Middleware: isAuth
-        - GET /current
-        - PUT /follow
-        - POST /dp
-          - Middleware: upload.single("dp")
-        - GET /all/:type
+RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: undefined
+    at new NodeError (node:internal/errors:405:5)
+    at ServerResponse.writeHead (node:_http_server:347:11)
+    at ServerResponse._implicitHeader (node:_http_server:338:8)
+    at write_ (node:_http_outgoing:915:9)
+    at ServerResponse.end (node:_http_outgoing:1026:5)
+    at ServerResponse.send (/var/task/backend/node_modules/express/lib/response.js:232:10)
+    at ServerResponse.json (/var/task/backend/node_modules/express/lib/response.js:278:15)
+    at /var/task/backend/index.js:21:30
+    at Layer.handle_error (/var/task/backend/node_modules/express/lib/router/layer.js:71:5)
+    at trim_prefix (/var/task/backend/node_modules/express/lib/router/index.js:326:13)

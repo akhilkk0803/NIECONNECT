@@ -15,6 +15,7 @@ const Login = () => {
   const toast = useToast();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     username: null,
     password: null,
@@ -30,6 +31,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await fetch(url + myParam + "/", {
         method: "POST",
         body: JSON.stringify({ ...user }),
@@ -50,12 +52,15 @@ const Login = () => {
           announcement: myParam == "student" ? false : true,
         })
       );
+      setLoading(false);
       // setTimeout(() => {
       //   dispatch(removeUser());
       //   console.log("removed")
       // }, 9000);
       return navigate(`/profile/${user.username}`);
     } catch (e) {
+      setLoading(false);
+
       console.log(e.message);
       toast({
         title: e.message,
@@ -107,8 +112,8 @@ const Login = () => {
               />
             </InputGroup>
           </div>
-          <button onClick={handleSubmit} className="button">
-            Submit
+          <button onClick={handleSubmit} className="button" disabled={loading}>
+            {loading ? "Loading..." : "Submit"}
           </button>
           <div className="flex gap-3 ">
             <Link

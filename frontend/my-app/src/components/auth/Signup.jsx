@@ -71,19 +71,20 @@ const Signup = ({ edit = false, currUser }) => {
     e.preventDefault();
     const method = edit ? "PUT" : "POST";
     const uri = edit ? "user" : myParam + "/new";
-    if (!user.username || (!edit && !user.password) || !user.name) {
-      returnToast({ message: "Fill all fields" });
-      return;
-    }
-    if (!edit && user.password.trim().length < 7) {
-      returnToast({ message: "Password should be minimum of length 7" });
-      return;
-    }
-    if (!edit && confirmPassword != user.password) {
-      returnToast({ message: "CONFIRM PASSWORD DOES NOT MATCH PASSWORD" });
-      return;
-    }
+
     try {
+      if (!user.username || (!edit && !user.password) || !user.name) {
+        returnToast({ message: "Fill all fields" });
+        throw new Error();
+      }
+      if (!edit && user.password.trim().length < 7) {
+        returnToast({ message: "Password should be minimum of length 7" });
+        throw new Error();
+      }
+      if (!edit && confirmPassword != user.password) {
+        returnToast({ message: "CONFIRM PASSWORD DOES NOT MATCH PASSWORD" });
+        throw new Error();
+      }
       setLoading(true);
       const res = await fetch(url + uri, {
         method,
