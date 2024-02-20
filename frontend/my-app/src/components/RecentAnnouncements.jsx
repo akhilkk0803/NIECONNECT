@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { url } from "../url";
 import Creator from "./Creator";
+import { motion } from "framer-motion";
 import {
   Skeleton,
   SkeletonCircle,
@@ -41,11 +42,14 @@ const RecentAnnouncements = ({ type }) => {
         )}
         {clubData.length === 0 && <h3>No Club announcemnts</h3>}
 
-        {clubData.map((el) => (
-          <div
+        {clubData.map((el, i) => (
+          <motion.div
             className="dark:bg-slate-900 
          
           text-sm  p-4 rounded-lg"
+            initial={{ x: -200 - 20 - i }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.2 + i }}
           >
             <Creator
               dp={el.auth?.dp}
@@ -54,7 +58,7 @@ const RecentAnnouncements = ({ type }) => {
               username={el.auth?.username}
             />
             <div className="mt-3 font-medium">{el.message}</div>
-          </div>
+          </motion.div>
         ))}
       </div>
       <hr />
@@ -68,12 +72,15 @@ const RecentAnnouncements = ({ type }) => {
           </Stack>
         )}
         {deptData.length === 0 && <h3>No Dept announcemnts</h3>}
-        {deptData.map((el) => (
-          <div
+        {deptData.map((el,i) => (
+          <motion.div
             className="dark:bg-slate-900 
           text-sm 
           p-4
           rounded-lg"
+            initial={{ x: -200 - 20 - i }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.3 + i }}
           >
             <Creator
               dp={el.auth?.dp}
@@ -82,7 +89,7 @@ const RecentAnnouncements = ({ type }) => {
               username={el.auth?.username}
             />
             <div className="mt-3 font-medium">{el.message}</div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

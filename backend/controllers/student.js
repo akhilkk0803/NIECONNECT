@@ -24,6 +24,7 @@ exports.getCurrentUser = async (req, res, next) => {
     res.status(404).json({ message: "NOT FOUIND" });
     return;
   }
+
   const token = getToken(user._id, req.userId);
   res.status(200).json({ user, token });
 };

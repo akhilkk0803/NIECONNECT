@@ -85,7 +85,7 @@ exports.getAllAnnounce = async (req, res, next) => {
   const { limits } = req.query;
   let announcements = await Dept.find(
     {},
-    { announcements: { $slice: -3 }, auth: 1, _id: 0 }
+    { announcements: 1, auth: 1, _id: 0 }
   ).populate("announcements.auth");
   announcements = announcements
     .map((el) => el.announcements)

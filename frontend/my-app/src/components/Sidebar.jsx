@@ -1,16 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import RecentAnnouncements from "./RecentAnnouncements";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  useDisclosure,
-  ModalBody,
-  ModalFooter,
-} from "@chakra-ui/react";
+
 const types = [
   {
     icon: (
