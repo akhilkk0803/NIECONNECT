@@ -110,7 +110,7 @@ const types = [
 ];
 const Sidebar = () => {
   return (
-    <div className="border-r-2 border-r-gray-800 ">
+    <div className="border-r-2 border-r-gray-800">
       <div
         className="flex md:flex-col justify-between
         gap-5
