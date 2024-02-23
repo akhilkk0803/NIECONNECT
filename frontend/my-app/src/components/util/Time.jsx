@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   differenceInDays,
   differenceInHours,
@@ -6,15 +6,14 @@ import {
   differenceInMinutes,
 } from "date-fns";
 const Time = ({ currTime }) => {
-  let time = 1;
-  let type = "second";
+  const [time, setTime] = useState(1);
+  const [type, setType] = useState("second");
   const getTime = (...fn) => {
     for (let i = 0; i < fn.length; i++) {
       const temp = fn[i](new Date(), currTime);
       if (temp > 0) {
-        time = temp;
-        console.log(fn);
-        type = fn[i].name.substring(12);
+        setTime(temp);
+        setType(fn[i].name.substring(12));
         return true;
       }
     }
