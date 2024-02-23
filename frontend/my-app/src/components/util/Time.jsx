@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   differenceInDays,
   differenceInHours,
@@ -20,12 +20,15 @@ const Time = ({ currTime }) => {
     }
     return false;
   };
-  getTime(
-    differenceInDays,
-    differenceInHours,
-    differenceInMinutes,
-    differenceInSeconds
-  );
+  useEffect(() => {
+    getTime(
+      differenceInDays,
+      differenceInHours,
+      differenceInMinutes,
+      differenceInSeconds
+    );
+  }, [currTime]);
+
   return (
     <p className="text-xs dark:text-gray-200 ">
       <span className="font-semibold  ">
