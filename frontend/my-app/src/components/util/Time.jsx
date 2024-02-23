@@ -30,9 +30,8 @@ const Time = ({ currTime }) => {
 
   return (
     <p className="text-xs dark:text-gray-200 ">
-      <span className="font-semibold  ">
-        {time} {type} ago
-      </span>
+      <span className="font-semibold  ">{time}</span>
+      {type} ago
     </p>
   );
 };
