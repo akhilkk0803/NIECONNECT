@@ -45,11 +45,13 @@ const Login = () => {
         throw new Error("Incorrect Password");
       }
       const User = await res.json();
+      console.log(User)
       dispatch(
         setuser({
           user: User.user.auth,
           token: User.token,
           announcement: myParam == "student" ? false : true,
+          socials: User.user.socials,
         })
       );
       setLoading(false);
