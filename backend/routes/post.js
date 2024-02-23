@@ -23,4 +23,5 @@ router.delete("/pic/", postContoller.deletePic);
 router.post("/new", isAuth, postContoller.postPost);
 router.put("/update", postContoller.updatePost);
 router.put("/like", isAuth, postContoller.addLike);
+router.delete("/:id", isAuth, postContoller.deletePost);
 module.exports = router;

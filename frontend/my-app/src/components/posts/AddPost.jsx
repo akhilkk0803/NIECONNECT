@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import { url } from "../../url";
 import { TrashIcon } from "@radix-ui/react-icons";
-import { Input } from "@chakra-ui/react";
+import { Input, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const AddPost = () => {
+  const toast = useToast();
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user?.user?.username);
   const [post, setPost] = useState({
     caption: null,
     hashtag: null,
   });
   const [uploaded, setUploaded] = useState([]);
-  const toast = (title, desc, status) => {
+  const Rtoast = (title, desc, status) => {
     toast({
       title: title,
       description: desc,
@@ -25,14 +27,19 @@ const AddPost = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (!post.caption || !uploaded) {
-      toast(
+    if (!post.caption) {
+      Rtoast(
         "Please enter all the details",
         "caption/images are missing",
         "error"
       );
       return;
     }
+    if (uploaded.length === 0) {
+      Rtoast("SELECT AT LEAST ONE IMAGE", "THE MORE THE BETTER", "error");
+      return;
+    }
+    setLoading(true);
     await fetch(url + "post/new", {
       method: "POST",
       body: JSON.stringify({
@@ -44,6 +51,7 @@ const AddPost = () => {
         Authorization: "Bearer " + token,
       },
     });
+    setLoading(false);
     navigate("/profile/" + user);
   };
   const handleImages = async (e) => {
@@ -122,8 +130,12 @@ const AddPost = () => {
           )}
         </div>
         <div className="flex justify-center">
-          <button onClick={submitHandler} className="button ">
-            submit
+          <button
+            onClick={submitHandler}
+            className="button "
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "submit"}
           </button>
         </div>
       </form>

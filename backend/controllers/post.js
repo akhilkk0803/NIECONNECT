@@ -2,6 +2,7 @@ const fs = require("fs");
 const Post = require("../models/post");
 const Auth = require("../models/auth");
 const Socials = require("../models/SocialInteraction");
+const SocialInteraction = require("../models/SocialInteraction");
 const generateError = (err, code) => {
   const error = new Error(err);
   error.statusCode = code;
@@ -135,6 +136,25 @@ exports.addLike = async (req, res, next) => {
     res.json(result);
   } catch (error) {
     error.statusCode = error.statusCode || 500;
+    next(error);
+  }
+};
+exports.deletePost = async (req, res, next) => {
+  const auth = req.auth;
+  const { id } = req.params;
+  console.log(auth, id);
+  try {
+    const post = await Post.findOne({ _id: id, auth });
+    if (!post) {
+      throw generateError("POST NOT FOUND", 404);
+    }
+    await SocialInteraction.findOneAndUpdate(
+      { auth },
+      { $pull: { posts: id } }
+    );
+    await Post.findByIdAndDelete(id);
+    res.status(200).json("OK");
+  } catch (error) {
     next(error);
   }
 };

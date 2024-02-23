@@ -85,6 +85,7 @@ const NavBar = () => {
                 <p className="text-black dark:text-white">
                   {dark ? "Dark" : "Light"}
                 </p>
+                {user && <button onClick={logouthandler}>Logout</button>}
               </div>
             </motion.div>
           )}
