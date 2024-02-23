@@ -11,7 +11,9 @@ const getToken = (id, auth) => {
   return token;
 };
 exports.getCurrentClub = async (req, res, next) => {
-  const club = await Club.findOne({ auth: req.userId }).populate("auth");
+  const club = await Club.findOne({ auth: req.userId })
+    .populate("auth")
+    .populate("socials");
   try {
     if (!club) {
       throw generateError("No club found", 404);

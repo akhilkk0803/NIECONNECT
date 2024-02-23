@@ -19,7 +19,7 @@ exports.getUser = async (req, res, next) => {
   }
 };
 exports.getCurrentUser = async (req, res, next) => {
-  const user = await Student.findOne({ auth: req.userId }).populate("auth");
+  const user = await Student.findOne({ auth: req.userId }).populate("auth").populate('socials');
   if (!user) {
     res.status(404).json({ message: "NOT FOUIND" });
     return;

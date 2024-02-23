@@ -11,7 +11,7 @@ const getToken = (id, auth) => {
   return token;
 };
 exports.getCurrentDept = async (req, res, next) => {
-  const dept = await Dept.findOne({ auth: req.userId }).populate("auth");
+  const dept = await Dept.findOne({ auth: req.userId }).populate("auth").populate('socials');
   try {
     if (!dept) {
       throw generateError("No dept found", 404);
