@@ -10,11 +10,10 @@ const Time = ({ currTime }) => {
   const [type, setType] = useState("second");
   const getTime = (...fn) => {
     for (let i = 0; i < fn.length; i++) {
-      const temp = fn[i](new Date(), currTime);
+      const temp = fn[i].fn(new Date(), currTime);
       if (temp > 0) {
         setTime(temp);
-        console.log(fn[i].name.substring(12));
-        setType(fn[i].name.substring(12));
+        setType(fn[i].type);
         return true;
       }
     }
@@ -22,16 +21,16 @@ const Time = ({ currTime }) => {
   };
   useEffect(() => {
     getTime(
-      differenceInDays,
-      differenceInHours,
-      differenceInMinutes,
-      differenceInSeconds
+      { fn: differenceInDays, type: "Days" },
+      { fn: differenceInHours, type: "Hours" },
+      { fn: differenceInMinutes, type: "Minutes" },
+      { fn: differenceInSeconds, type: "Seconds" }
     );
   }, [currTime]);
 
   return (
     <p className="text-xs dark:text-gray-200 ">
-      <span className="font-semibold  ">{time}</span>
+      <span className="font-semibold mr-1 ">{time}</span>
       {type} ago
     </p>
   );
