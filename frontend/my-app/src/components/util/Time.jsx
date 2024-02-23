@@ -13,6 +13,7 @@ const Time = ({ currTime }) => {
       const temp = fn[i](new Date(), currTime);
       if (temp > 0) {
         setTime(temp);
+        console.log(fn[i].name.substring(12));
         setType(fn[i].name.substring(12));
         return true;
       }
