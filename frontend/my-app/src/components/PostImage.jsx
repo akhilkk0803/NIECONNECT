@@ -53,8 +53,9 @@ const PostImage = ({ el }) => {
                 <div className="flex gap-3 justify-center items-center">
                   {[...new Array(n)].map((_, i) => (
                     <div
+                      key={i}
                       className={` mr-3 rounded-[50%] bg-white p-[4px] ${
-                        curr == i ? "bg-white" : "bg-blue-700"
+                        curr === i ? "bg-white" : "bg-blue-800"
                       } cursor-pointer shadow-lg`}
                       onClick={() => {
                         setDir(curr > i ? "left" : "right");
