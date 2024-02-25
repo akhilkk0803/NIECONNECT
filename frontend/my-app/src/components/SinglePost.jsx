@@ -20,7 +20,7 @@ import {
   PopoverAnchor,
   Button,
 } from "@chakra-ui/react";
-const SinglePost = ({ el }) => {
+const SinglePost = ({ el, setUserData, userData }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const user = useSelector((state) => state.user?.user);
@@ -40,7 +40,13 @@ const SinglePost = ({ el }) => {
         Authorization: "Bearer " + token,
       },
     });
-    navigate("/profile/" + user?.username);
+    setUserData((prev) => ({
+      ...prev,
+      socials: {
+        ...userData.socials,
+        posts: userData.socials.posts.filter((post) => post._id != el._id),
+      },
+    }));
   };
   return (
     <motion.div

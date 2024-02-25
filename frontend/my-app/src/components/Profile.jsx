@@ -28,6 +28,7 @@ const Profile = () => {
       .then((data) => {
         setUserData(data);
         setLoading(false);
+        console.log(data)
       })
       .catch((err) => {
         setError({ msg: err.message, status: err.status });
@@ -104,7 +105,7 @@ const Profile = () => {
           <TabPanels>
             <TabPanel>
               <div className="flex flex-col md:ml-52 md:mr-52">
-                <Posts post={userData.socials.posts} />
+                <Posts post={userData.socials.posts} userData={userData} setUserData={setUserData}/>
               </div>
             </TabPanel>
             <TabPanel

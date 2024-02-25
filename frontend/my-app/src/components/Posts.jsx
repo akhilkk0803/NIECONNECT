@@ -60,12 +60,12 @@ import SinglePost from "./SinglePost";
 //       "Beneath a starlit sky, whispers of the night echoed through ancient trees. Moonbeams danced on leaves, weaving tales in silver threads. Nature's nocturnal symphony serenaded the solitary wanderer, each step a silent ode to the mystical.",
 //   },
 // ];
-const Posts = ({ post }) => {
+const Posts = ({ post, setUserData, userData }) => {
   return (
     <>
       {/* <PostPost /> */}
       {post.map((el) => (
-        <SinglePost el={el} />
+        <SinglePost el={el} setUserData={setUserData} userData={userData} />
       ))}
     </>
   );

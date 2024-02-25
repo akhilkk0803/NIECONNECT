@@ -19,7 +19,8 @@ const PostAction = ({ el, addComment, len }) => {
   //const id = "659ea669191d7a4537fa7c94";
   const [comment, setComment] = useState("");
   const [commentLoading, setCommentLoading] = useState(false);
-  const [likes, setLikes] = useState(el.Likes);
+  const [likes, setLikes] = useState(el?.Likes);
+  const [likesLen, setLikeslen] = useState(el?.Likes?.length);
   const [likesLoading, setlikesLoading] = useState(false);
   const [likeState, setLikeState] = useState(
     !el.Likes.filter((el) => el === id).length > 0
@@ -30,7 +31,9 @@ const PostAction = ({ el, addComment, len }) => {
         throw new Error("LOGIN IN TO LIKE");
       }
       if (likesLoading) return;
+      setLikeslen((prev) => (!likeState ? prev - 1 : prev + 1));
       setlikesLoading(true);
+      setLikeState((prev) => !prev);
       const res = await fetch(
         url + "post/like?like=" + likeState + "&postId=" + el._id,
         {
@@ -42,8 +45,6 @@ const PostAction = ({ el, addComment, len }) => {
       );
       const data = await res.json();
       setlikesLoading(false);
-      setLikes(data.Likes);
-      setLikeState((prev) => !prev);
     } catch (error) {
       return toast({
         title: error.message,
@@ -94,6 +95,7 @@ const PostAction = ({ el, addComment, len }) => {
         likehandler={likehandler}
         likeState={!likeState}
         loading={likesLoading}
+        len={likesLen}
       />
       <div className="flex gap-2  items-center">
         <svg
