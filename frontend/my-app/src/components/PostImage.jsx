@@ -11,7 +11,7 @@ const PostImage = ({ el }) => {
       <AnimatePresence>
         <div
           className="
-        sm:w-full md:w-1/2
+       w-full md:w-1/2
         relative "
         >
           <motion.img
