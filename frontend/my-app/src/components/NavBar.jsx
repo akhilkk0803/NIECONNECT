@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../store/userslice";
 import { url } from "../url";
+import Sidebar from "./Sidebar";
 const NavBar = () => {
   const [dark, setDark] = useState(true);
   const [open, setOpen] = useState(false);
@@ -54,14 +55,16 @@ const NavBar = () => {
           {dark ? "Dark" : "Light"}
           {user && <button onClick={logouthandler}>Logout</button>}
         </div>
-        <div
-          className="block md:hidden "
-          onClick={() => setOpen((prev) => !prev)}
-        >
-          Menu
-        </div>
+        {user && (
+          <div
+            className="block md:hidden "
+            onClick={() => setOpen((prev) => !prev)}
+          >
+            Menu
+          </div>
+        )}
         <AnimatePresence>
-          {open && (
+          {open && user && (
             <motion.div
               initial={{ x: 300 }}
               animate={{ x: 0 }}
@@ -73,18 +76,25 @@ const NavBar = () => {
             >
               <div onClick={() => setOpen(false)}>X</div>
               <div className=" items-center gap-5 flex flex-col  ">
-                <NavLink to={"/profile/" + user?.username}>
+                <Sidebar setOpen={setOpen} />
+                <NavLink
+                  to={"/profile/" + user?.username}
+                  onClick={() => setOpen(false)}
+                >
                   <Avatar
-                    src={defaultLogo}
+                    src={url + "public/dp/" + user?.dp}
                     size="3"
-                    onClick={() => setOpen(false)}
+                    radius="full"
+                    fallback={user?.name?.substring(0, 2)}
                   />
                 </NavLink>
                 {/* dark/lightmode */}
-                <Switch defaultChecked onClick={toggle} />
-                <p className="text-black dark:text-white">
-                  {dark ? "Dark" : "Light"}
-                </p>
+                <div className="flex gap-2">
+                  <Switch defaultChecked onClick={toggle} />
+                  <p className="text-black dark:text-white">
+                    {dark ? "Dark" : "Light"}
+                  </p>
+                </div>
                 {user && <button onClick={logouthandler}>Logout</button>}
               </div>
             </motion.div>

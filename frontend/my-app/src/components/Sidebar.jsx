@@ -108,17 +108,22 @@ const types = [
     to: "/search",
   },
 ];
-const Sidebar = () => {
+const Sidebar = ({ setOpen }) => {
   return (
     <div className="border-r-2 border-r-gray-800">
       <div
-        className="flex md:flex-col justify-between
+        className="flex flex-col  justify-between
         gap-5
-      overflow-auto p-4
+      overflow-auto md:p-4
       "
       >
         {types.map((el) => (
-          <NavLink to={el.to}>
+          <NavLink
+            to={el.to}
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
             <div
               className={`flex gap-2 items-center 
               grow 

@@ -33,7 +33,9 @@ const Home = () => {
   return (
     <div className={` px-3  w-full`}>
       <div className="grid md:grid-cols-[0.8fr,2.9fr,1fr]">
-        <Sidebar />
+        <div className="hidden md:block">
+          <Sidebar />
+        </div>
         <div className="flex flex-col mr-3">
           <div className="handleOverflow">
             {user?.announcement && <AddAnnouncement />}

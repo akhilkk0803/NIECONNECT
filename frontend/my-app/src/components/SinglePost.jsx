@@ -52,7 +52,7 @@ const SinglePost = ({ el, setUserData, userData }) => {
     <motion.div
       className="post  dark:bg-gray-950 
       shadow-blue-900
-       md:ml-3 shadow-sm "
+       md:ml-3 shadow-sm p-5"
       initial={{ opacity: 0, y: -30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}

@@ -16,7 +16,7 @@ const ProfileInfo = ({ socials }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <div>
+    < >
       <div className="flex justify-center flex-wrap gap-5 items-center">
         <div className="flex flex-col items-center">
           <h5> {socials.posts.length}</h5>
@@ -90,7 +90,7 @@ const ProfileInfo = ({ socials }) => {
           </div>
         </ModalContent>
       </Modal>
-    </div>
+    </>
   );
 };
 

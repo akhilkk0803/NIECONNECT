@@ -28,7 +28,7 @@ const Profile = () => {
       .then((data) => {
         setUserData(data);
         setLoading(false);
-        console.log(data)
+        console.log(data);
       })
       .catch((err) => {
         setError({ msg: err.message, status: err.status });
@@ -50,7 +50,7 @@ const Profile = () => {
       <div>
         <div className="flex justify-center gap-6 wrap">
           <ProfileImage dp={userData.user.dp} name={userData.user.name} />
-          <div className="flex flex-col gap-3 items-start md:max-w-[25%] ">
+          <div className="flex flex-col gap-3 items-start md:max-w-[30%] w-full">
             <div>
               <div className="flex gap-2">
                 <p className="font-semibold text-lg">
@@ -64,7 +64,9 @@ const Profile = () => {
                 {userData.user.about}
               </p>
             </div>
-            <ProfileInfo socials={userData.socials} />
+            <div className="hidden md:block">
+              <ProfileInfo socials={userData.socials} />
+            </div>
             <Follow el={userData} />
             {userData?.user?._id === user && (
               <NavLink
@@ -91,7 +93,9 @@ const Profile = () => {
               </NavLink>
             )}
           </div>
-          <div></div>
+        </div>
+        <div className="block md:hidden mt-3">
+          <ProfileInfo socials={userData.socials} />
         </div>
       </div>
       <div className="p-5 ">
@@ -105,7 +109,11 @@ const Profile = () => {
           <TabPanels>
             <TabPanel>
               <div className="flex flex-col md:ml-52 md:mr-52">
-                <Posts post={userData.socials.posts} userData={userData} setUserData={setUserData}/>
+                <Posts
+                  post={userData.socials.posts}
+                  userData={userData}
+                  setUserData={setUserData}
+                />
               </div>
             </TabPanel>
             <TabPanel
