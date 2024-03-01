@@ -37,6 +37,7 @@ const PostComments = ({ comments }) => {
                   time={el.createdAt}
                   dp={el.user?.dp}
                   message={el?.message}
+                  name={el.user.name}
                 />
               </motion.div>
             ))}
@@ -50,6 +51,7 @@ const PostComments = ({ comments }) => {
             time={comments[0].createdAt}
             dp={comments[0].user?.dp}
             message={comments[0]?.message}
+            name={comments[0].user.name}
           />
         </div>
       )}
