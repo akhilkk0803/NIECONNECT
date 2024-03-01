@@ -117,18 +117,16 @@ const Sidebar = ({ setOpen }) => {
       overflow-auto md:p-4
       "
       >
-        {types.map((el) => (
-          <NavLink
-            to={el.to}
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
+        {types.map((el, index) => (
+          <NavLink key={index} to={el.to}>
             <div
               className={`flex gap-2 items-center 
-              grow 
-            min-w-min
-            text${el.color}`}
+        grow 
+        min-w-min
+        text${el.color}`}
+              onClick={(e) => {
+                setOpen(false);
+              }}
             >
               <div className="p-2">{el.icon}</div>
               <div>{el.title}</div>
