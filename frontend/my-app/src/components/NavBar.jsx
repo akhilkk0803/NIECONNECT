@@ -40,6 +40,7 @@ const NavBar = () => {
         </div>
 
         <div className=" items-center gap-5 md:flex hidden ">
+          {user && <NavLink to="/">Home</NavLink>}
           {user?.username && (
             <NavLink to={"/profile/" + user?.username}>
               <Avatar
@@ -55,6 +56,7 @@ const NavBar = () => {
           {dark ? "Dark" : "Light"}
           {user && <button onClick={logouthandler}>Logout</button>}
         </div>
+
         {user && (
           <div
             className="block md:hidden "
@@ -77,6 +79,12 @@ const NavBar = () => {
               <div onClick={() => setOpen(false)}>X</div>
               <div className=" items-center gap-5 flex flex-col  ">
                 <Sidebar setOpen={setOpen} />
+                {user && (
+                  <NavLink to="/" onClick={() => setOpen(false)}>
+                    Home
+                  </NavLink>
+                )}
+
                 <NavLink
                   to={"/profile/" + user?.username}
                   onClick={() => setOpen(false)}
