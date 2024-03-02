@@ -28,7 +28,7 @@ const AddAnnouncement = ({ el }) => {
   return (
     <div className=" p-6  rounded-md dark:bg-slate-900 bg-gray-200 ml-1 ">
       <div className="flex gap-3 ">
-        <Avatar src={url + "public/dp/" + user?.dp} radius="full" size="4" />
+        <Avatar src={ user?.dp} radius="full" size="4" />
         <div className="flex w-full gap-2">
           <Input
             variant="flushed"

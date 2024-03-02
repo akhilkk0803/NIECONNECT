@@ -15,7 +15,7 @@ const PostImage = ({ el }) => {
         relative "
         >
           <motion.img
-            src={url + "public/post/" + el[curr]}
+            src={el[curr]}
             key={el[curr]}
             exit={{ x: dir == "left" ? -1000 : 300, opacity: 0 }}
             transition={{ duration: 0.1 }}

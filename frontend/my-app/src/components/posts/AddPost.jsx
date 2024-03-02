@@ -116,7 +116,7 @@ const AddPost = () => {
                 <div className="relative">
                   <img
                     key={el}
-                    src={`${url}public/post/${el}`}
+                    src={`${el}`}
                     className="w-32 rounded-2xl "
                     alt=""
                   />

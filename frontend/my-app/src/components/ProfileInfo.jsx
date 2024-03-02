@@ -74,7 +74,7 @@ const ProfileInfo = ({ socials }) => {
                     "
                     >
                       <Avatar
-                        src={url + "public/dp/" + el.dp}
+                        src={el.dp}
                         size="md"
                         className="mx-4 border-2 border-red-300"
                       />

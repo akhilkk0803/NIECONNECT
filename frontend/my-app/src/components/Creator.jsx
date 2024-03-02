@@ -9,7 +9,7 @@ const Creator = ({ dp, name, time, username, message }) => {
     <NavLink to={"/profile/" + username}>
       <div className="flex gap-3">
         <Avatar
-          src={url + "public/dp/" + dp}
+          src={ dp}
           fallback={name?.substring(0, 2)}
           radius="full"
           size="3"

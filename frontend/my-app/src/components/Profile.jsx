@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { NavLink, json, useParams } from "react-router-dom";
 import { url } from "../url";
-import { Avatar } from "@radix-ui/themes";
 import ProfileInfo from "./ProfileInfo";
 import Posts from "./Posts";
 import { getUser } from "./util/users";

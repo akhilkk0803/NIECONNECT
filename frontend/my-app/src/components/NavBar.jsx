@@ -44,7 +44,7 @@ const NavBar = () => {
           {user?.username && (
             <NavLink to={"/profile/" + user?.username}>
               <Avatar
-                src={url + "public/dp/" + user?.dp}
+                src={user?.dp}
                 size="3"
                 radius="full"
                 fallback={user?.name?.substring(0, 2)}
@@ -90,7 +90,7 @@ const NavBar = () => {
                   onClick={() => setOpen(false)}
                 >
                   <Avatar
-                    src={url + "public/dp/" + user?.dp}
+                    src={user?.dp}
                     size="3"
                     radius="full"
                     fallback={user?.name?.substring(0, 2)}

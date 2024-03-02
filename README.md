@@ -76,11 +76,3 @@ The backend of CONNECT is built on RESTful APIs, ensuring a scalable and standar
    ```bash
    npm run dev
    ```
-
-## Contributing
-
-Feel free to contribute to this project. Create a fork, make your changes, and submit a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).

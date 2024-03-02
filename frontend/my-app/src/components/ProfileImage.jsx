@@ -20,7 +20,7 @@ const ProfileImage = ({ dp, name }) => {
       <Avatar
         onClick={onOpen}
         className="cursor-pointer"
-        src={url + "public/dp/" + dp}
+        src={ dp}
         fallback={name?.substring(0, 2)}
         radius="full"
         size="8"
@@ -36,7 +36,7 @@ const ProfileImage = ({ dp, name }) => {
         <ModalContent>
           <Avatar
             onClick={onOpen}
-            src={url + "public/dp/" + dp}
+            src={ dp}
             fallback={name?.substring(0, 2)}
             radius="full"
           />

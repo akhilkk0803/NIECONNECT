@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Login from "./Login";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { url } from "../../url";
@@ -56,7 +55,7 @@ const Signup = ({ edit = false, currUser }) => {
     });
     const result = await res.json();
     setUploaded(true);
-    setDp(result.filename);
+    setDp(result);
   };
   const handleUser = (e) => {
     if (e.target.name === "password") {
@@ -139,7 +138,6 @@ const Signup = ({ edit = false, currUser }) => {
   return (
     <div
       className="flex
-
     justify-center flex-col items-center "
     >
       {!edit ? (
@@ -255,7 +253,7 @@ const Signup = ({ edit = false, currUser }) => {
                 >
                   Upload{" "}
                 </motion.button>
-                {dp && <Avatar src={url + "public/dp/" + dp} />}
+                {dp && <Avatar src={dp} />}
               </InputRightElement>
               <Input
                 type="file"
