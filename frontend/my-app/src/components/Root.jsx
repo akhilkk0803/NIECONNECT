@@ -6,12 +6,11 @@ const Root = () => {
   return (
     <div
       className="dark:bg-authBg   dark:bg-[#00040f]  
-    
     dark:text-white 
     text-black
     min-h-screen
     bg-white
-    container"
+    "
     >
       <NavBar />
       <Outlet />
