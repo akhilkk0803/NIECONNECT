@@ -6,17 +6,17 @@ import { url } from "../url";
 const Follow = ({ el }) => {
   const token = localStorage.getItem("token");
 
-  if (!token) return;
   const socials = useSelector((state) => state.user?.socials);
   const user = useSelector((state) => state.user?.user?._id);
-  if (!user) return;
   const [following, setFollowing] = useState(false);
   useEffect(() => {
+    if (!token) return;
+    if (!user) return;
+
     setFollowing(
       socials?.following?.filter((curr) => curr === el.user._id).length > 0
     );
   }, [el]);
-  console.log(following);
   const handleFollow = async () => {
     try {
       const res = await fetch(

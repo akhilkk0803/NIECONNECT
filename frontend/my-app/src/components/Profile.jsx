@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { useEffect, useState } from "react";
 import { NavLink, json, useParams } from "react-router-dom";
 import { url } from "../url";
@@ -41,10 +41,10 @@ const Profile = () => {
       </h1>
     );
   }
-  if (loading) {
-    return <Loading />;
-  }
-  return (
+
+  return loading ? (
+    <Loading />
+  ) : (
     <div className="container ">
       <div>
         <div className="flex justify-center gap-6 wrap">
