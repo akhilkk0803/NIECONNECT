@@ -16,7 +16,6 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
   const redirect = useNavigate();
-  if (!user?.user)  redirect("/auth");
   useEffect(() => {
     setLoading(true);
     fetch(url + "post/", {
@@ -28,8 +27,15 @@ const Home = () => {
       .then((result) => {
         setLoading(false);
         setPost(result.flat(Infinity));
-      });
+      })
+      .catch((err) => setLoading(false));
   }, [user]);
+  if (loading) {
+    return <Loading />;
+  }
+  if (!loading && !user.user) {
+    return redirect("/auth");
+  }
   return (
     <div className={` px-3  w-full`}>
       <div className="grid md:grid-cols-[0.8fr,2.9fr,1fr]">
