@@ -16,8 +16,8 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.user);
   const redirect = useNavigate();
+  if (!user?.user) return redirect("/auth");
   useEffect(() => {
-    if (!user?.user) return redirect("/auth");
     setLoading(true);
     fetch(url + "post/", {
       headers: {
