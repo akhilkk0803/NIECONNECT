@@ -4,16 +4,19 @@ import { Avatar } from "@radix-ui/themes";
 import { NavLink } from "react-router-dom";
 import { url } from "../url";
 import { Badge, Skeleton, SkeletonText, Stack } from "@chakra-ui/react";
+
 const Search = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [text, setText] = useState("");
   useEffect(() => {
-    setLoading(true);
-    getUser(text, true).then((res) => {
-      setLoading(false);
-      setSuggestions(res);
-    });
+    setTimeout(() => {
+      setLoading(true);
+      getUser(text, true).then((res) => {
+        setLoading(false);
+        setSuggestions(res);
+      });
+    }, 600);
     return () => {
       setLoading(false);
       console.log("cleaned");
@@ -42,12 +45,11 @@ const Search = () => {
             bg-gray-400
             dark:bg-slate-900 dark:hover:bg-blue-950
             hover:bg-gray-500
-            
-            cursor-pointer rounded-full w-fit  "
+            cursor-pointer rounded-full w-fit "
             >
               <NavLink to={"/profile/" + el.username}>
                 <div className="flex gap-3 ">
-                  <Avatar src={url + "public/dp/" + el.dp} />
+                  <Avatar src={el.dp} />
                   <div className="flex flex-col items-center">
                     <p>{el.username}</p>
                     <Badge>{el.type}</Badge>
