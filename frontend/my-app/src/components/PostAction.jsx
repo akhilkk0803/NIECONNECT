@@ -132,11 +132,7 @@ const PostAction = ({ el, addComment, len }) => {
           </Popover.Trigger>
           <Popover.Content style={{ width: 360 }}>
             <div className="flex gap-3">
-              <Avatar
-                size="2"
-                src={dp ? url + "public/dp/" + dp : defaultLogo}
-                radius="full"
-              />
+              <Avatar size="2" src={dp ? dp : defaultLogo} radius="full" />
               <div>
                 <TextArea
                   placeholder="Write a comment…"

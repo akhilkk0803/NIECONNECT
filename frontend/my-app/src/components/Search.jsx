@@ -49,7 +49,7 @@ const Search = () => {
             >
               <NavLink to={"/profile/" + el.username}>
                 <div className="flex gap-3 ">
-                  <Avatar src={el.dp} />
+                  <Avatar src={el.dp} fallback={el.username.slice(0,2)}/>
                   <div className="flex flex-col items-center">
                     <p>{el.username}</p>
                     <Badge>{el.type}</Badge>
