@@ -4,6 +4,7 @@ import {
   differenceInHours,
   differenceInSeconds,
   differenceInMinutes,
+  differenceInCalendarMonths,
 } from "date-fns";
 const Time = ({ currTime }) => {
   const [time, setTime] = useState(1);
@@ -21,6 +22,7 @@ const Time = ({ currTime }) => {
   };
   useEffect(() => {
     getTime(
+      { fn: differenceInCalendarMonths, type: "Months" },
       { fn: differenceInDays, type: "Days" },
       { fn: differenceInHours, type: "Hours" },
       { fn: differenceInMinutes, type: "Minutes" },
