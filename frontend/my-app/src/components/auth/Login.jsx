@@ -89,7 +89,7 @@ const Login = () => {
         <div className="flex flex-col gap-3">
           <div>
             <label htmlFor="username">Username</label>
-            <Input type="text" name="username" onChange={handlechange} />{" "}
+            <Input type="text" name="username" onChange={handlechange} id="login-username"/>{" "}
           </div>
           <div className="">
             <label htmlFor="password">Password</label>
@@ -111,10 +111,11 @@ const Login = () => {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 onChange={handlechange}
+                id="login-password"
               />
             </InputGroup>
           </div>
-          <button onClick={handleSubmit} className="button" disabled={loading}>
+          <button onClick={handleSubmit} className="button" disabled={loading} id="login-submit">
             {loading ? "Loading..." : "Submit"}
           </button>
           <div className="flex gap-3 ">
