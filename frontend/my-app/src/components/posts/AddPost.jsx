@@ -67,13 +67,7 @@ const AddPost = () => {
     setUploaded((prev) => [...file, ...prev]);
   };
   const deleteHandler = async (img) => {
-    await fetch(url + "post/pic", {
-      method: "DELETE",
-      body: JSON.stringify({ img }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    
     setUploaded(uploaded.filter((curr) => img != curr));
   };
   const handleChange = (e) => {
